@@ -26,7 +26,8 @@ public final class ESallers {
 	private int factoryUid;
 
 	private HashMap<Integer, String> priceCode;
-
+	
+	
 	ESallers() {
 		factoryUid = 98;
 		plainDetais = new PlainDetails();
@@ -79,7 +80,8 @@ public final class ESallers {
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
 			return null;
 		}
-
+		
+		addProductionMoney(money);
 		return thankEngineForSale;
 	}
 
@@ -103,7 +105,8 @@ public final class ESallers {
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
 			return null;
 		}
-
+		
+		addProductionMoney(money);
 		return thankThrackForSale;
 	}
 
@@ -128,7 +131,32 @@ public final class ESallers {
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
 			return null;
 		}
+		
+		addProductionMoney(money);
 		return thankHeadForSale;
+	}
+	
+	
+	/**
+	 * Позволяет осуществить покупку Инженера.
+	 * 
+	 * Данный класс является ключевым звеном во всех технологии изготовления армейского оборудования
+	 * 
+	 * @param money - стоимость покупки
+	 * 
+	 * @return Ingeneer
+	 */
+	public Ingeneer byIgeIngeneer(int money){
+		
+		Ingeneer newIngeneer = new Ingeneer();
+		itt.generatePlainIngeneer(newIngeneer);
+		
+		if (money < newIngeneer.getPrice()) {
+			System.out.println("Недостаточное финансирование. Изучайте прайс");
+			return null;
+		}
+		addProductionMoney(money);
+		return newIngeneer;
 	}
 
 	// Generate equalsTable with part name and internal code
@@ -139,6 +167,7 @@ public final class ESallers {
 		priceCode.put(2, "Башня Мышонок");
 		priceCode.put(3, "Мотор Мышонок");
 		priceCode.put(4, "Траки Мышонок");
+		priceCode.put(5, "Солдат-инженер");
 	}
 
 	// UIDS
@@ -159,12 +188,25 @@ public final class ESallers {
 	protected void setMainProvider(Providers mainProvider) {
 		this.mainProvider = mainProvider;
 	}
+	
+	//INGENEER TRAINER
+	protected void setItt(IngeneerTechnologyTable itt) {
+		this.itt = itt;
+	}
+	
+	// MONEY TRANSFER SECTION
+	
+	private void addProductionMoney(int incomeMoney){
+		if (mainProvider != null){
+			mainProvider.addProductionMoney(incomeMoney);
+		}
+	}
 /**
  * Прайс простых запчастей
  * 	
  * @return
  */
-	public List getFullPrice(){
+	public List<String> getFullPrice(){
 		
 		ArrayList<String>price = new ArrayList<String>();
 		price.add("Купить военный чертёж - 11.000");
@@ -184,8 +226,4 @@ public final class ESallers {
 
 		return price;
 	}
-
-protected void setItt(IngeneerTechnologyTable itt) {
-	this.itt = itt;
-}
 }

@@ -1,5 +1,33 @@
 package eFactory;
 
+
+/**
+ * Главный класс проекта.
+ * Данный проект есть учебно тренеровочный.
+ * 
+ * Суть сводится к следующему:
+ * Необходимо создать экземпляр данного класса, получить от него отдел продаж.
+ * Далее - по ситуации:
+ * 
+ * 1) Покупать детали к машинам со строковыми значениями.
+ * 
+ * 2) Попробовать собрать военную машину.
+ * 
+ * Для этого необходимо:
+ * 1) Купить в отделе продаж все нужны чести для техники.
+ * 2) Купить в отделе продаж инженера.
+ * 3) Передать все части инженеру, вместе с небольшим вознаграждением
+ * 
+ * После чего, вы получите экземпляр класса боевой техники.
+ * 
+ * 
+ * Внимание, инженер не сможет собрать гражданские виды техники.
+ * 
+ * @version 0.1
+ * 
+ * @author Андрей Кожуров
+ */
+
 import java.util.Random;
 
 public class Providers {
@@ -11,6 +39,8 @@ public class Providers {
 	private IngeneerTechnologyTable itt;
 	
 	private int factoryUid;
+	private long productionMoney;
+	private long serviceMoney;
 
 	public Providers() {
 		initProvider();
@@ -36,6 +66,24 @@ public class Providers {
 
 	public ESallers getSallers() {
 		return sallers;
+	}
+
+	//PRODUCTION MONEY
+	public long getProductionMoney() {
+		return productionMoney;
+	}
+
+	protected void addProductionMoney(long money) {
+		this.productionMoney += money;
+	}
+
+	//SERVICE MONEY
+	public long getServiceMoney() {
+		return serviceMoney;
+	}
+
+	protected void addServiceMoney(long serviceMoney) {
+		this.serviceMoney += serviceMoney;
 	}
 
 }

@@ -3,12 +3,14 @@ package eFactory;
 public final class Ingeneer {
 
 	private int factoryUid;
+	private Providers mainProviders;
 
 	private int age;
 	private int armyMechanicExp;
 	private int civilMechanicExp;
 	private String name;
 	private String status;
+	private int price;
 
 	public Ingeneer() {
 		factoryUid = 99;
@@ -29,12 +31,13 @@ public final class Ingeneer {
 	 */
 	public ThankMaschine makeNewThank(ThankMaschine mainBody,
 			ThankEngine installingEngine, ThankHead installingHead,
-			ThankTrack installingTrak) {
+			ThankTrack installingTrak, int price) {
 		
 		if (mainBody != null &&mainBody.getFactoryUid() == factoryUid
 		&& installingEngine !=null && installingEngine.getFactoryUid() == factoryUid
 		&& installingHead != null && installingHead.getFactoryUid() == factoryUid
-		&& installingTrak != null &&installingTrak.getFactoryUid() == factoryUid) {
+		&& installingTrak != null &&installingTrak.getFactoryUid() == factoryUid
+		&& price >= 100) {
 
 			mainBody.setEngine(installingEngine);
 			mainBody.setHead(installingHead);
@@ -42,6 +45,7 @@ public final class Ingeneer {
 
 			if (mainBody.showComplexWeghtUp()) {
 				armyMechanicExp += 100;
+				addServiceMoney(price);
 				return mainBody;
 			} else {
 				System.out.println("Ошибочная конфигурация техники!!");
@@ -138,7 +142,31 @@ public final class Ingeneer {
 	protected void setStatus(String status) {
 		this.status = status;
 	}
+
+	//CASHE
+	/**
+	 * Позволяет получть значение параметра "Стоимость".
+	 * 
+	 * @return int
+	 */
+	public int getPrice() {
+		return price;
+	}
+
+	protected void setPrice(int cashe) {
+		this.price = cashe;
+	}
+
+	// MAIN PROVIDER
+	protected void setMainProviders(Providers mainProviders) {
+		this.mainProviders = mainProviders;
+	}
 	
-	
-	
+
+	// MONEY TRANSFER BLOCK
+	private void addServiceMoney(int incomeMoney){
+		if (mainProviders != null){
+		mainProviders.addServiceMoney(incomeMoney);
+		}
+	}
 }

@@ -25,14 +25,14 @@ final class IngeneerTechnologyTable {
 	}
 
 	// ENGINE TECHNOLOGY
-	protected Ingeneer generatePlainIngeneer() {
-		Ingeneer newIngeneer = new Ingeneer();
+	protected Ingeneer generatePlainIngeneer(Ingeneer newIngeneer) {
 		newIngeneer.setAge(random.nextInt(20)+ 25);
 		newIngeneer.setArmyMechanicExp(newIngeneer.getAge()*10);
 		newIngeneer.setCivilMechanicExp(newIngeneer.getAge()*12);
 		newIngeneer.setFactoryUid(factoryUid);
 		newIngeneer.setName(names.get(random.nextInt(names.size())));
 		newIngeneer.setStatus("solder");
+		newIngeneer.setPrice(1000);
 		
 		return newIngeneer;
 	}
