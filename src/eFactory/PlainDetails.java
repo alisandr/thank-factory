@@ -1,57 +1,64 @@
 package eFactory;
 
-import java.util.HashMap;
+/**
+ * Класс описывающий генерацию списков продажи простых запчастей.
+ * 
+ * @version 0.2
+ * @author Андрей Кожуров
+ * 
+ */
+
 
 class PlainDetails {
 
-	private HashMap<Integer, String> buildPlainCivirPart() {
+	protected String[] getWheelCivirPart(int quantity, int type) {
 
-		HashMap<Integer, String> civilCarParts = new HashMap<Integer, String>();
-		civilCarParts.put(1, "mischlen");
-		civilCarParts.put(2, "pirelli");
-		civilCarParts.put(3, "racing special");
-
-		civilCarParts.put(4, "Iron car body");
-		civilCarParts.put(5, "Aluminium car body");
-		civilCarParts.put(6, "Titanum car body");
-
-		civilCarParts.put(7, "Dog engine");
-		civilCarParts.put(8, "Puma engine");
-		civilCarParts.put(9, "Gepard engine");
-		
-		return civilCarParts;
-	}
-
-	private HashMap<Integer, String> buildPlainArmyPart() {
-
-		HashMap<Integer, String>armyCarParts = new HashMap<Integer, String>();
-		armyCarParts.put(1, "Iron tracks");
-		armyCarParts.put(2, "Titanium tracks");
-		armyCarParts.put(3, "Special tracks");
-
-		armyCarParts.put(4, "Iron body");
-		armyCarParts.put(5, "Titanium body");
-		armyCarParts.put(6, "Special body");
-
-		armyCarParts.put(7, "Iron head");
-		armyCarParts.put(8, "Titanium head");
-		armyCarParts.put(9, "Special head");
-
-		armyCarParts.put(10, "harpuun");
-		armyCarParts.put(11, "cannon");
-		armyCarParts.put(12, "blaster");
-
-		return armyCarParts;
-	}
-
-	protected HashMap<Integer, String> getPlainDetailSet(int version) {
-	
-		switch (version) {
-			case 1 :
-		return buildPlainCivirPart();
-			case 2 :
-				return buildPlainArmyPart();
-	}
+		switch (type) {
+		case 1:
+			return fillSellPartsArray("Mischlen", quantity);
+		case 2:
+			return fillSellPartsArray("Pirelli", quantity);
+		case 3:
+			return fillSellPartsArray("Racing special", quantity);
+		}
 		return null;
 	}
+
+	protected String[] getBodyCivirPart(int quantity, int type) {
+
+		switch (type) {
+		case 1:
+			return fillSellPartsArray("Iron car body", quantity);
+		case 2:
+			return fillSellPartsArray("Aluminium car body", quantity);
+		case 3:
+			return fillSellPartsArray("Titanum car body", quantity);
+		}
+		return null;
+	}
+
+	protected String[] getEngineCivirPart(int quantity, int type) {
+
+		switch (type) {
+		case 1:
+			return fillSellPartsArray("Dog engine", quantity);
+		case 2:
+			return fillSellPartsArray("Puma engine", quantity);
+		case 3:
+			return fillSellPartsArray("Gepard engine", quantity);
+		}
+		return null;
+	}
+
+	private String[] fillSellPartsArray(String parts, int quantity) {
+		String[] sell = new String[quantity];
+		String inParts = parts;
+
+		for (String part : sell) {
+			part = inParts.toString();
+		}
+
+		return sell;
+	}
+
 }

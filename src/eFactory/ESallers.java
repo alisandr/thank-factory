@@ -8,9 +8,8 @@ package eFactory;
  *  Через данный класс осуществляется продажа инженеров.
  *  
  *  @author Кожуров Андрей
- *  @version 0.1
- */ 
- 
+ *  @version 0.3
+ */
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,41 +21,48 @@ public final class ESallers {
 	private IngeneerTechnologyTable itt;
 	private Providers mainProvider;
 
-	private PlainDetails plainDetais;
 	private int factoryUid;
 
+	private HashMap<Integer, Integer> codeTable;
 	private HashMap<Integer, String> priceCode;
-	
-	
+
 	ESallers() {
 		factoryUid = 98;
-		plainDetais = new PlainDetails();
 		createPriceCode();
+		generateCodetable();
 	}
 
 	/**
-	 * Метод позволяет получить полный прайс-лист с кодами военных товаров.
+	 * Метод продажи простых запчастей к машинам. Важно учесть, что в запросе
+	 * вам необходимо указать 2 типа обектов: ГРУППУ ТОВАРОВ (1 - колёса, 2 -
+	 * корпуса, 3 - моторы); КОКРЕТНЫЙ ТОВАР ПО ТРАЙСУ, т.е. если вы хотите
+	 * купить колесо мишлен, нужно указать type = 1 (т.к. это колесо);
+	 * internalType = 1 (первый в разделе колёс).
 	 * 
-	 */
-	public HashMap<Integer, String> getArmyPrice() {
-		return priceCode;
-	}
-
-	/**
-	 * Метод продажи простых запчастей к машинам
 	 * 
 	 * @param type
+	 *            - тип категории
+	 * @param internalType
+	 *            - Номер товара в категории.
 	 * @param quantity
-	 * @return
+	 *            - количество товара
+	 * 
+	 * @return String[]
+	 * 
 	 */
-	public ArrayList<HashMap<Integer, String>> byPlainDitails(int type,
+	public String[] byPlainDitails(int money, int type, int internalType,
 			int quantity) {
-		ArrayList<HashMap<Integer, String>> plainDetailsProduction = new ArrayList<>();
-		for (int i = 0; i < quantity; i++) {
-			plainDetailsProduction.add(plainDetais.getPlainDetailSet(type));
-		}
+		PlainDetails pd = new PlainDetails();
 
-		return plainDetailsProduction;
+		if (isAllMoney(money, type, quantity)) {
+			addProductionMoney(money);
+			return pd.getWheelCivirPart(quantity, internalType);
+			
+		} else {
+			addPenaltyMoney(money);
+			System.out.println("Недостаточное финансирование. Изучайте прайс");
+			return null;
+		}
 	}
 
 	/**
@@ -70,19 +76,27 @@ public final class ESallers {
 	 *            -- вносима при покупке сумма;
 	 * @param typeNumber
 	 *            -- код неободимого товара;
-	 * @return ThankEngine -- получаемый модуль.
+	 * @return ArrayList c ThankEngine -- получаемый модуль.
 	 */
-	public ThankEngine buyThankEngine(int money, int typeNumber) {
-		ThankEngine thankEngineForSale = new ThankEngine();
-		ttt.setEngineParams(1, thankEngineForSale);
+	public ArrayList<ThankEngine> buyThankEngine(int money, int typeNumber,
+			int quantity) {
 
-		if (money < thankEngineForSale.getPrice()) {
+		ArrayList<ThankEngine> sellEngineList = new ArrayList<>();
+		int type = typeNumber;
+
+		for (int i = quantity; i > 0; i--) {
+			ThankEngine thankEngineForSale = new ThankEngine();
+			ttt.setEngineParams(type, thankEngineForSale);
+			sellEngineList.add(thankEngineForSale);
+		}
+		if (sellEngineList.get(0).getPrice() * quantity < money) {
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
+			addPenaltyMoney(money);
 			return null;
 		}
-		
+
 		addProductionMoney(money);
-		return thankEngineForSale;
+		return sellEngineList;
 	}
 
 	/**
@@ -96,18 +110,28 @@ public final class ESallers {
 	 *            -- вносима при покупке сумма;
 	 * @param typeNumber
 	 *            -- код неободимого товара;
-	 * @return ThankTrack -- получаемый модуль.
+	 * @return ArrayList c ThankTrack -- получаемый модуль.
 	 */
-	public ThankTrack buyThankTrack(int money, int typeNumber) {
-		ThankTrack thankThrackForSale = new ThankTrack();
-		ttt.setTrackParams(1, thankThrackForSale);
-		if (money < thankThrackForSale.getPrice()) {
+	public ArrayList<ThankTrack> buyThankTrack(int money, int typeNumber,
+			int quantity) {
+
+		ArrayList<ThankTrack> sellTrackList = new ArrayList<>();
+		int type = typeNumber;
+
+		for (int i = type; i > 0; i--) {
+			ThankTrack thankThrackForSale = new ThankTrack();
+			ttt.setTrackParams(type, thankThrackForSale);
+			sellTrackList.add(thankThrackForSale);
+		}
+
+		if (sellTrackList.get(0).getPrice() * quantity < money) {
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
+			addPenaltyMoney(money);
 			return null;
 		}
-		
+
 		addProductionMoney(money);
-		return thankThrackForSale;
+		return sellTrackList;
 	}
 
 	/**
@@ -121,37 +145,47 @@ public final class ESallers {
 	 *            -- вносима при покупке сумма;
 	 * @param typeNumber
 	 *            -- код неободимого товара;
-	 * @return ThankHead -- получаемый модуль.
+	 * @return ArrayList c ThankHead -- получаемый модуль.
 	 */
-	public ThankHead buyThankHead(int money, int typeNumber) {
-		ThankHead thankHeadForSale = new ThankHead();
-		ttt.setHeadParams(1, thankHeadForSale);
+	public ArrayList<ThankHead> buyThankHead(int money, int typeNumber,
+			int quantity) {
 
-		if (money < thankHeadForSale.getPrice()) {
+		ArrayList<ThankHead> sellHeadList = new ArrayList<>();
+		int type = typeNumber;
+
+		for (int i = quantity; i > 0; i--) {
+			ThankHead thankHeadForSale = new ThankHead();
+			ttt.setHeadParams(type, thankHeadForSale);
+			sellHeadList.add(thankHeadForSale);
+		}
+		if (sellHeadList.get(0).getPrice() * quantity < money) {
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
+			addPenaltyMoney(money);
 			return null;
 		}
-		
+
 		addProductionMoney(money);
-		return thankHeadForSale;
+		return sellHeadList;
 	}
-	
-	
+
 	/**
 	 * Позволяет осуществить покупку Инженера.
 	 * 
-	 * Данный класс является ключевым звеном во всех технологии изготовления армейского оборудования
+	 * Данный класс является ключевым звеном во всех технологии изготовления
+	 * армейского оборудования
 	 * 
-	 * @param money - стоимость покупки
+	 * @param money
+	 *            - стоимость покупки
 	 * 
 	 * @return Ingeneer
 	 */
-	public Ingeneer byIgeIngeneer(int money){
-		
+	public Ingeneer byIgeIngeneer(int money) {
+
 		Ingeneer newIngeneer = new Ingeneer();
 		itt.generatePlainIngeneer(newIngeneer);
-		
+
 		if (money < newIngeneer.getPrice()) {
+			addPenaltyMoney(money);
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
 			return null;
 		}
@@ -170,6 +204,30 @@ public final class ESallers {
 		priceCode.put(5, "Солдат-инженер");
 	}
 
+	// Generate internal use code equals price - plain details
+	private void generateCodetable() {
+		codeTable = new HashMap<>();
+		codeTable.put(1, 3);
+		codeTable.put(2, 10);
+		codeTable.put(3, 20);
+		codeTable.put(4, 15);
+		codeTable.put(6, 50);
+		codeTable.put(7, 7);
+		codeTable.put(8, 12);
+		codeTable.put(9, 19);
+	}
+
+	// Money review
+
+	private boolean isAllMoney(int money, int type, int quantity) {
+
+		if (codeTable.get(type) * quantity < money) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	// UIDS
 	protected int getFactoryUid() {
 		return factoryUid;
@@ -183,46 +241,51 @@ public final class ESallers {
 	protected void setTtt(ThankTechnologyTable ttt) {
 		this.ttt = ttt;
 	}
-	
-	//MAIN PROVIDER
+
+	// MAIN PROVIDER
 	protected void setMainProvider(Providers mainProvider) {
 		this.mainProvider = mainProvider;
 	}
-	
-	//INGENEER TRAINER
+
+	// INGENEER TRAINER
 	protected void setItt(IngeneerTechnologyTable itt) {
 		this.itt = itt;
 	}
-	
+
 	// MONEY TRANSFER SECTION
-	
-	private void addProductionMoney(int incomeMoney){
-		if (mainProvider != null){
+
+	private void addProductionMoney(int incomeMoney) {
+		if (mainProvider != null) {
 			mainProvider.addProductionMoney(incomeMoney);
 		}
 	}
-/**
- * Прайс простых запчастей
- * 	
- * @return
- */
-	public List<String> getFullPrice(){
-		
-		ArrayList<String>price = new ArrayList<String>();
-		price.add("Купить военный чертёж - 11.000");
-		price.add("Купить гражданский чертёж - 7.000");
-		
-		price.add("Купить колесо \"мишлен\" - 100");
-		price.add("Купить колесо \"пирелли\" - 200");
-		price.add("Купить гоночное колесо - 500");
-		
-		price.add("Купить железный корпус - 1000");
-		price.add("Купить алюминиевый корпус - 2000");
-		price.add("Купить корпус из специальных сплавов - 1000");
-		
-		price.add("Купить двигатель \"Собака\" - 700");
-		price.add("Купить двигатель \"Пума\" - 800");
-		price.add("Купить двигатель \"Гепард\" - 1300");
+	
+	private void addPenaltyMoney(int incomeMoney) {
+		if (mainProvider != null) {
+			mainProvider.addPenaltyMoney(incomeMoney);
+		}
+	}
+
+	/**
+	 * Прайс простых запчастей
+	 * 
+	 * @return
+	 */
+	public List<String> getFullPrice() {
+
+		ArrayList<String> price = new ArrayList<String>();
+
+		price.add("Купить колесо \"мишлен\" - 3");
+		price.add("Купить колесо \"пирелли\" - 10");
+		price.add("Купить гоночное колесо - 20");
+
+		price.add("Купить железный корпус - 15");
+		price.add("Купить алюминиевый корпус - 20");
+		price.add("Купить корпус из специальных сплавов - 50");
+
+		price.add("Купить двигатель \"Собака\" - 7");
+		price.add("Купить двигатель \"Пума\" - 12");
+		price.add("Купить двигатель \"Гепард\" - 19");
 
 		return price;
 	}

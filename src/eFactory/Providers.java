@@ -23,7 +23,7 @@ package eFactory;
  * 
  * Внимание, инженер не сможет собрать гражданские виды техники.
  * 
- * @version 0.1
+ * @version 0.2
  * 
  * @author Андрей Кожуров
  */
@@ -39,9 +39,11 @@ public class Providers {
 	private IngeneerTechnologyTable itt;
 	
 	private int factoryUid;
+	
 	private long productionMoney;
 	private long serviceMoney;
-
+	private long penaltyMoney;
+	
 	public Providers() {
 		initProvider();
 	}
@@ -84,6 +86,15 @@ public class Providers {
 
 	protected void addServiceMoney(long serviceMoney) {
 		this.serviceMoney += serviceMoney;
+	}
+	
+	//PENALTY MONEY
+	public long getPenaltyMoney() {
+		return penaltyMoney;
+	}
+
+	protected void addPenaltyMoney(long penaltyMoney) {
+		this.penaltyMoney += penaltyMoney;
 	}
 
 }
