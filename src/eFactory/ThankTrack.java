@@ -5,16 +5,18 @@ import java.util.ArrayList;
 /**
  * <p> Класс описывающий шасси танка</p>
  *@author Кожуров Андрей
- *@version 0.1
+ *@version 0.2
  */
 
 
 public class ThankTrack {
 
 	private int factoryUid;
-	private String name;
 	
+	private String name;
 	private int price;
+	private char sloting;
+	
 	private int weghtUp;
 	private int weght;
 
@@ -88,5 +90,20 @@ public class ThankTrack {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	//SLOTTING
+	/**
+	 * Возвращает тип слота
+	 * 
+	 * @return char
+	 */
+	
+	public char getSloting() {
+		return sloting;
+	}
+
+	protected void setSloting(char sloting) {
+		this.sloting = sloting;
 	}
 }

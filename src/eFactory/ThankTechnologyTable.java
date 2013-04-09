@@ -5,7 +5,7 @@ final class ThankTechnologyTable {
 	 * Класс описания технологический параметров танков 1 - mice
 	 * 
 	 * @author Кожуров Андрей
-	 * @version 0.1
+	 * @version 0.3
 	 */
 
 	private int factoryUid;
@@ -19,6 +19,7 @@ final class ThankTechnologyTable {
 			newEngine.setWeght(50);
 			newEngine.setPrice(400);
 			newEngine.setName("Мышонок");
+			newEngine.setSloting('A');
 			return newEngine;
 		}
 		return null;
@@ -33,6 +34,7 @@ final class ThankTechnologyTable {
 			newTrack.setWeght(150);
 			newTrack.setPrice(700);
 			newTrack.setName("Мышонок");
+			newTrack.setSloting('A');
 			return newTrack;
 		}
 		return null;
@@ -46,6 +48,8 @@ final class ThankTechnologyTable {
 			newHead.setArmour(30);
 			newHead.setWeght(250);
 			newHead.setPrice(500);
+			newHead.setName("Мышонок");
+			newHead.setSloting('A');
 			return newHead;
 		}
 		return null;
@@ -59,7 +63,16 @@ final class ThankTechnologyTable {
 			newThankBody.setBodyArmour(30);
 			newThankBody.setWeght(500);
 			newThankBody.setPrice(1200);
+			newThankBody.setName("Мышонок");
+			newThankBody.setSloting('A');
 			return newThankBody;
+		case 2:
+			newThankBody.setFactoryUid(factoryUid);
+			newThankBody.setBodyArmour(45);
+			newThankBody.setWeght(800);
+			newThankBody.setPrice(1500);
+			newThankBody.setName("Крыса");
+			newThankBody.setSloting('B');
 		}
 		return null;
 	}

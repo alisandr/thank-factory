@@ -4,7 +4,7 @@ package eFactory;
  * <p>
  * Класс описывающий модель корпуса танка, для установки основных модулей
  * </p>
- * В данной версии необзодимо наличие 3 видов оборудования
+ * В данной версии необходимо наличие 3 видов оборудования
  * 
  * @param Engine
  *            -- танковый мотор
@@ -26,6 +26,7 @@ public final class ThankMaschine {
 
 	private int bodyArmour;
 	private int weght;
+	private char sloting;
 
 	private ThankEngine engine;
 	private ThankHead head;
@@ -102,7 +103,11 @@ public final class ThankMaschine {
 	}
 
 	protected void setEngine(ThankEngine engine) {
-		this.engine = engine;
+		if (engine.getSloting() == sloting) {
+			this.engine = engine;
+		} else {
+			System.out.println("Эти запчасти несовместимы");
+		}
 	}
 
 	// INSTALL HEAD
@@ -111,7 +116,11 @@ public final class ThankMaschine {
 	}
 
 	protected void setHead(ThankHead head) {
-		this.head = head;
+		if (head.getSloting() == sloting) {
+			this.head = head;
+		} else {
+			System.out.println("Эти запчасти несовместимы");
+		}
 	}
 
 	// INSTALL TRACK
@@ -120,7 +129,11 @@ public final class ThankMaschine {
 	}
 
 	protected void setTrack(ThankTrack track) {
-		this.track = track;
+		if (track.getSloting() == sloting) {
+			this.track = track;
+		} else {
+			System.out.println("Эти запчасти несовместимы");
+		}
 	}
 
 	// SHOW COMPLECSIVE INFO
@@ -136,6 +149,7 @@ public final class ThankMaschine {
 					+ (bodyArmour + head.getArmour()));
 			System.out
 					.println("Общая грузоподъёмность : " + track.getWeghtUp());
+			System.out.println("Тип слотирования :" + sloting);
 
 			System.out.println("Мотор (лс) : " + engine.getPower());
 			System.out.println("Мотор (вес) : " + engine.getWeght());
@@ -158,6 +172,20 @@ public final class ThankMaschine {
 			System.out.println("Не все детали на месте!");
 		}
 
+	}
+
+	/**
+	 * Слотирование - это тип элементов которые принимет данная платформа.
+	 * Например, техника с различающимся типом слоторования несовместима.
+	 * 
+	 * @return char
+	 */
+	public char getSloting() {
+		return sloting;
+	}
+
+	protected void setSloting(char sloting) {
+		this.sloting = sloting;
 	}
 
 	// Controll methods

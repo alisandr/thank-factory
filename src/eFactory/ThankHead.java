@@ -8,15 +8,17 @@ import java.util.ArrayList;
  * </p>
  * 
  * @author Кожуров Андрей
- * @version 0.1
+ * @version 0.2
  */
 
 public class ThankHead {
 
 	private int factoryUid;
+	
 	private String name;
 	private int price;
-
+	private char sloting;
+	
 	private int armour;
 	private int weght;
 	
@@ -95,6 +97,21 @@ public class ThankHead {
 
 	protected void setPrice(int price) {
 		this.price = price;
+	}
+	
+	//SLOTTING
+	/**
+	 * Возвращает тип слота
+	 * 
+	 * @return char
+	 */
+	
+	public char getSloting() {
+		return sloting;
+	}
+
+	protected void setSloting(char sloting) {
+		this.sloting = sloting;
 	}
 
 }

@@ -9,15 +9,17 @@ import java.util.ArrayList;
  * @param wegth
  * 
  *@author Кожуров Андрей
- *@version 0.1
+ *@version 0.2
  */
 
 
 public class ThankEngine {
 
 	private int factoryUid;
+	
 	private String name;
 	private int price;
+	private char sloting;
 	
 	private int power;
 	private int weght;
@@ -87,5 +89,20 @@ public class ThankEngine {
 
 	protected void setName(String name) {
 		this.name = name;
+	}
+
+	//SLOTTING
+	/**
+	 * Возвращает тип слота
+	 * 
+	 * @return char
+	 */
+	
+	public char getSloting() {
+		return sloting;
+	}
+
+	protected void setSloting(char sloting) {
+		this.sloting = sloting;
 	}
 }
