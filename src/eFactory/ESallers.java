@@ -8,7 +8,7 @@ package eFactory;
  *  Через данный класс осуществляется продажа инженеров.
  *  
  *  @author Кожуров Андрей
- *  @version 0.3
+ *  @version 0.4
  */
 
 import java.util.ArrayList;
@@ -50,14 +50,14 @@ public final class ESallers {
 	 * @return String[]
 	 * 
 	 */
-	public String[] byPlainDitails(int money, int type, int internalType,
+	public String[] buyPlainDitails(int money, int type, int internalType,
 			int quantity) {
 		PlainDetails pd = new PlainDetails();
 
 		if (isAllMoney(money, type, quantity)) {
 			addProductionMoney(money);
 			return pd.getWheelCivirPart(quantity, internalType);
-			
+
 		} else {
 			addPenaltyMoney(money);
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
@@ -76,6 +76,9 @@ public final class ESallers {
 	 *            -- вносима при покупке сумма;
 	 * @param typeNumber
 	 *            -- код неободимого товара;
+	 * @param quanrity
+	 *            -- количество заказываемого товара.
+	 * 
 	 * @return ArrayList c ThankEngine -- получаемый модуль.
 	 */
 	public ArrayList<ThankEngine> buyThankEngine(int money, int typeNumber,
@@ -110,6 +113,9 @@ public final class ESallers {
 	 *            -- вносима при покупке сумма;
 	 * @param typeNumber
 	 *            -- код неободимого товара;
+	 * 
+	 * @param quanrity
+	 *            -- количество заказываемого товара.
 	 * @return ArrayList c ThankTrack -- получаемый модуль.
 	 */
 	public ArrayList<ThankTrack> buyThankTrack(int money, int typeNumber,
@@ -145,6 +151,9 @@ public final class ESallers {
 	 *            -- вносима при покупке сумма;
 	 * @param typeNumber
 	 *            -- код неободимого товара;
+	 * 
+	 * @param quanrity
+	 *            -- количество заказываемого товара.
 	 * @return ArrayList c ThankHead -- получаемый модуль.
 	 */
 	public ArrayList<ThankHead> buyThankHead(int money, int typeNumber,
@@ -169,6 +178,43 @@ public final class ESallers {
 	}
 
 	/**
+	 * <p>
+	 * Позволяет осуществить покупку танкового модуля "Корпус танка"
+	 * </p>
+	 * Перед покупкой необходимо ознакомиться со списком продаваемой продукции,
+	 * ценами и технологией.
+	 * 
+	 * @param money
+	 *            -- вносима при покупке сумма;
+	 * @param typeNumber
+	 *            -- код неободимого товара;
+	 * 
+	 * @param quanrity
+	 *            -- количество заказываемого товара.
+	 * @return ArrayList c ThankMashine -- получаемый модуль.
+	 */
+	public ArrayList<ThankMaschine> buyThankMashine(int money, int typeNumber,
+			int quantity) {
+
+		ArrayList<ThankMaschine> sellMashineList = new ArrayList<>();
+		int type = typeNumber;
+
+		for (int i = quantity; i > 0; i--) {
+			ThankMaschine thankMashineForSale = new ThankMaschine();
+			ttt.setBodyParams(type, thankMashineForSale);
+			sellMashineList.add(thankMashineForSale);
+		}
+		if (sellMashineList.get(0).getPrice() * quantity < money) {
+			System.out.println("Недостаточное финансирование. Изучайте прайс");
+			addPenaltyMoney(money);
+			return null;
+		}
+
+		addProductionMoney(money);
+		return sellMashineList;
+	}
+
+	/**
 	 * Позволяет осуществить покупку Инженера.
 	 * 
 	 * Данный класс является ключевым звеном во всех технологии изготовления
@@ -176,21 +222,31 @@ public final class ESallers {
 	 * 
 	 * @param money
 	 *            - стоимость покупки
+	 * @param quantity
+	 *            - количество заказываемого товара.
 	 * 
 	 * @return Ingeneer
+	 * 
 	 */
-	public Ingeneer byIgeIngeneer(int money) {
+	public ArrayList<Ingeneer> byIgeIngeneer(int money, int quantity) {
 
-		Ingeneer newIngeneer = new Ingeneer();
-		itt.generatePlainIngeneer(newIngeneer);
+		ArrayList<Ingeneer> sellIngeneerList = new ArrayList<>();
+		
+		for (int i = quantity; i > 0; i--) {
 
-		if (money < newIngeneer.getPrice()) {
+			Ingeneer newIngeneer = new Ingeneer();
+			itt.generatePlainIngeneer(newIngeneer);
+			
+			sellIngeneerList.add(newIngeneer);
+		}
+		
+		if (sellIngeneerList.get(0).getPrice()* quantity < money) {
 			addPenaltyMoney(money);
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
 			return null;
 		}
 		addProductionMoney(money);
-		return newIngeneer;
+		return sellIngeneerList;
 	}
 
 	// Generate equalsTable with part name and internal code
@@ -259,7 +315,7 @@ public final class ESallers {
 			mainProvider.addProductionMoney(incomeMoney);
 		}
 	}
-	
+
 	private void addPenaltyMoney(int incomeMoney) {
 		if (mainProvider != null) {
 			mainProvider.addPenaltyMoney(incomeMoney);

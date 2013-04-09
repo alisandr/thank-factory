@@ -70,6 +70,12 @@ public class Providers {
 		return sallers;
 	}
 
+	/**
+	 * Колечество денег полученных на продаже оборудования.
+	 * 
+	 * @return money (long)
+	 */
+	
 	//PRODUCTION MONEY
 	public long getProductionMoney() {
 		return productionMoney;
@@ -78,7 +84,13 @@ public class Providers {
 	protected void addProductionMoney(long money) {
 		this.productionMoney += money;
 	}
-
+	
+	/**
+	 * Колечество денег полученных от услуг инженеров.
+	 * 
+	 * @return money (long)
+	 */
+	
 	//SERVICE MONEY
 	public long getServiceMoney() {
 		return serviceMoney;
@@ -87,6 +99,12 @@ public class Providers {
 	protected void addServiceMoney(long serviceMoney) {
 		this.serviceMoney += serviceMoney;
 	}
+	
+	/**
+	 * Колечество денег полученных на штрафах и неустойках.
+	 * 
+	 * @return money (long)
+	 */
 	
 	//PENALTY MONEY
 	public long getPenaltyMoney() {
