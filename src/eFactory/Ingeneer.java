@@ -1,5 +1,16 @@
 package eFactory;
 
+
+
+/**
+ * Класс инженер - на данный момент основной производственный элемент.
+ * Главная задача - получить детали и собрать технику
+ * 
+ * @author Андрей Кожуров
+ * 
+ * @version 0.2
+ */
+
 public final class Ingeneer {
 
 	private int factoryUid;
@@ -44,7 +55,7 @@ public final class Ingeneer {
 			mainBody.setTrack(installingTrak);
 
 			if (mainBody.showComplexWeghtUp()) {
-				armyMechanicExp += 100;
+				armyMechanicExp += price/100 ;
 				addServiceMoney(price);
 				return mainBody;
 			} else {

@@ -5,10 +5,11 @@ final class ThankTechnologyTable {
 	 * Класс описания технологический параметров танков 1 - mice
 	 * 
 	 * @author Кожуров Андрей
-	 * @version 0.3
+	 * @version 0.5
 	 */
 
 	private int factoryUid;
+	
 
 	// ENGINE TECHNOLOGY
 	protected ThankEngine setEngineParams(int type, ThankEngine newEngine) {
@@ -17,8 +18,8 @@ final class ThankTechnologyTable {
 			newEngine.setFactoryUid(factoryUid);
 			newEngine.setPower(100);
 			newEngine.setWeght(50);
-			newEngine.setPrice(400);
-			newEngine.setName("Мышонок");
+			newEngine.setPrice(GlobalConstants.FIRSTENDGINE);
+			newEngine.setName(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME);
 			newEngine.setSloting('A');
 			return newEngine;
 		}
@@ -32,8 +33,8 @@ final class ThankTechnologyTable {
 			newTrack.setFactoryUid(factoryUid);
 			newTrack.setWeghtUp(1000);
 			newTrack.setWeght(150);
-			newTrack.setPrice(700);
-			newTrack.setName("Мышонок");
+			newTrack.setPrice(GlobalConstants.FIRST_TRACK);
+			newTrack.setName(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME);
 			newTrack.setSloting('A');
 			return newTrack;
 		}
@@ -47,8 +48,8 @@ final class ThankTechnologyTable {
 			newHead.setFactoryUid(factoryUid);
 			newHead.setArmour(30);
 			newHead.setWeght(250);
-			newHead.setPrice(500);
-			newHead.setName("Мышонок");
+			newHead.setPrice(GlobalConstants.FIRST_HEAD);
+			newHead.setName(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME);
 			newHead.setSloting('A');
 			return newHead;
 		}
@@ -62,16 +63,16 @@ final class ThankTechnologyTable {
 			newThankBody.setFactoryUid(factoryUid);
 			newThankBody.setBodyArmour(30);
 			newThankBody.setWeght(500);
-			newThankBody.setPrice(1200);
-			newThankBody.setName("Мышонок");
+			newThankBody.setPrice(GlobalConstants.FIRST_BODY);
+			newThankBody.setName(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME);
 			newThankBody.setSloting('A');
 			return newThankBody;
 		case 2:
 			newThankBody.setFactoryUid(factoryUid);
 			newThankBody.setBodyArmour(45);
 			newThankBody.setWeght(800);
-			newThankBody.setPrice(1500);
-			newThankBody.setName("Крыса");
+			newThankBody.setPrice(GlobalConstants.SECOND_BODY);
+			newThankBody.setName(GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME);
 			newThankBody.setSloting('B');
 		}
 		return null;

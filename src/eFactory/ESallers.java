@@ -231,16 +231,16 @@ public final class ESallers {
 	public ArrayList<Ingeneer> byIgeIngeneer(int money, int quantity) {
 
 		ArrayList<Ingeneer> sellIngeneerList = new ArrayList<>();
-		
+
 		for (int i = quantity; i > 0; i--) {
 
 			Ingeneer newIngeneer = new Ingeneer();
 			itt.generatePlainIngeneer(newIngeneer);
-			
+
 			sellIngeneerList.add(newIngeneer);
 		}
-		
-		if (sellIngeneerList.get(0).getPrice()* quantity < money) {
+
+		if (sellIngeneerList.get(0).getPrice() * quantity < money) {
 			addPenaltyMoney(money);
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
 			return null;
@@ -345,4 +345,56 @@ public final class ESallers {
 
 		return price;
 	}
+
+	/**
+	 * Прайс военный запчастей
+	 * 
+	 * @return
+	 */
+	public List<String> getArmyPrice() {
+
+		ArrayList<String> price = new ArrayList<String>();
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("Башня ")
+		.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
+		.append(" : ")
+		.append(GlobalConstants.FIRST_HEAD);
+		price.add(builder.toString());
+		builder.setLength(0);
+		
+		
+		builder.append("Мотор ")
+		.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
+		.append(" : ")
+		.append(GlobalConstants.FIRST_ENGINE);
+		price.add(builder.toString());
+		builder.setLength(0);
+		
+		
+		builder.append("Траки ")
+		.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
+		.append(" : ")
+		.append(GlobalConstants.FIRST_TRACK);
+		price.add(builder.toString());
+		builder.setLength(0);
+		
+		builder.append("Корпус ")
+		.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
+		.append(" : ")
+		.append(GlobalConstants.FIRST_BODY);
+		price.add(builder.toString());
+		builder.setLength(0);
+		
+		builder.append("Инженер ")
+		.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
+		.append(" : ")
+		.append(GlobalConstants.FIRST_INGENEER);
+		price.add(builder.toString());
+		builder.setLength(0);
+		
+		
+		return price;
+	}
+
 }

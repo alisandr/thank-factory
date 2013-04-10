@@ -31,8 +31,8 @@ final class IngeneerTechnologyTable {
 		newIngeneer.setCivilMechanicExp(newIngeneer.getAge()*12);
 		newIngeneer.setFactoryUid(factoryUid);
 		newIngeneer.setName(names.get(random.nextInt(names.size())));
-		newIngeneer.setStatus("solder");
-		newIngeneer.setPrice(1000);
+		newIngeneer.setStatus(GlobalConstants.FIRST_LEVEL_INGENEER_NAME);
+		newIngeneer.setPrice(GlobalConstants.FIRST_INGENEER);
 		
 		return newIngeneer;
 	}
