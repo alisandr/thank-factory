@@ -18,7 +18,7 @@ final class ThankTechnologyTable {
 			newEngine.setFactoryUid(factoryUid);
 			newEngine.setPower(100);
 			newEngine.setWeght(50);
-			newEngine.setPrice(GlobalConstants.FIRSTENDGINE);
+			newEngine.setPrice(GlobalConstants.FIRST_ENGINE);
 			newEngine.setName(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME);
 			newEngine.setSloting('A');
 			return newEngine;

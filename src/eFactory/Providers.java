@@ -49,6 +49,7 @@ public class Providers {
 	}
 
 	private void initProvider() {
+		random = new Random();
 		factoryUid = random.nextInt(10000)+100;
 		
 		sallers = new ESallers();

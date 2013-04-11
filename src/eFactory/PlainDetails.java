@@ -1,17 +1,18 @@
 package eFactory;
 
+import java.util.ArrayList;
+
 /**
  * Класс описывающий генерацию списков продажи простых запчастей.
  * 
- * @version 0.2
+ * @version 0.3
  * @author Андрей Кожуров
  * 
  */
 
-
 class PlainDetails {
 
-	protected String[] getWheelCivirPart(int quantity, int type) {
+	protected ArrayList<String> getWheelCivirPart(int quantity, int type) {
 
 		switch (type) {
 		case 1:
@@ -21,10 +22,11 @@ class PlainDetails {
 		case 3:
 			return fillSellPartsArray("Racing special", quantity);
 		}
-		return null;
+
+		return new ArrayList<String>();
 	}
 
-	protected String[] getBodyCivirPart(int quantity, int type) {
+	protected ArrayList<String> getBodyCivirPart(int quantity, int type) {
 
 		switch (type) {
 		case 1:
@@ -34,10 +36,10 @@ class PlainDetails {
 		case 3:
 			return fillSellPartsArray("Titanum car body", quantity);
 		}
-		return null;
+		return new ArrayList<String>();
 	}
 
-	protected String[] getEngineCivirPart(int quantity, int type) {
+	protected ArrayList<String> getEngineCivirPart(int quantity, int type) {
 
 		switch (type) {
 		case 1:
@@ -47,17 +49,12 @@ class PlainDetails {
 		case 3:
 			return fillSellPartsArray("Gepard engine", quantity);
 		}
-		return null;
+		return new ArrayList<String>();
 	}
 
-	private String[] fillSellPartsArray(String parts, int quantity) {
-		String[] sell = new String[quantity];
-		String inParts = parts;
-
-		for (String part : sell) {
-			part = inParts.toString();
-		}
-
+	private ArrayList<String> fillSellPartsArray(String parts, int quantity) {
+		ArrayList<String> sell = new ArrayList<>();
+		sell.add(parts);
 		return sell;
 	}
 
