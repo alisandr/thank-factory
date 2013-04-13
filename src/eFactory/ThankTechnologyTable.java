@@ -18,7 +18,6 @@ final class ThankTechnologyTable {
 			newEngine.setFactoryUid(factoryUid);
 			newEngine.setPower(100);
 			newEngine.setWeght(50);
-			newEngine.setPrice(GlobalConstants.FIRST_ENGINE);
 			newEngine.setName(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME);
 			newEngine.setSloting('A');
 			return newEngine;
@@ -33,7 +32,6 @@ final class ThankTechnologyTable {
 			newTrack.setFactoryUid(factoryUid);
 			newTrack.setWeghtUp(1000);
 			newTrack.setWeght(150);
-			newTrack.setPrice(GlobalConstants.FIRST_TRACK);
 			newTrack.setName(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME);
 			newTrack.setSloting('A');
 			return newTrack;
@@ -48,7 +46,6 @@ final class ThankTechnologyTable {
 			newHead.setFactoryUid(factoryUid);
 			newHead.setArmour(30);
 			newHead.setWeght(250);
-			newHead.setPrice(GlobalConstants.FIRST_HEAD);
 			newHead.setName(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME);
 			newHead.setSloting('A');
 			return newHead;

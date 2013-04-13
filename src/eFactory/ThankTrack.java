@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * <p> Класс описывающий шасси танка</p>
  *@author Кожуров Андрей
- *@version 0.2
+ *@version 0.3
  */
 
 
@@ -14,7 +14,6 @@ public class ThankTrack {
 	private int factoryUid;
 	
 	private String name;
-	private int price;
 	private char sloting;
 	
 	private int weghtUp;
@@ -64,20 +63,7 @@ public class ThankTrack {
 	protected void setFactoryUid(int factoryUid) {
 		this.factoryUid = factoryUid;
 	}
-	
-	// PRICE
-	/**
-	 * <p>
-	 * Позволяет получить значение стоимости танкового трака
-	 * </p>
-	 */
-	public int getPrice() {
-		return price;
-	}
 
-	protected void setPrice(int price) {
-		this.price = price;
-	}
 
 	// NAME
 	

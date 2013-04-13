@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @param wegth
  * 
  *@author Кожуров Андрей
- *@version 0.2
+ *@version 0.3
  */
 
 
@@ -18,7 +18,6 @@ public class ThankEngine {
 	private int factoryUid;
 	
 	private String name;
-	private int price;
 	private char sloting;
 	
 	private int power;
@@ -54,20 +53,6 @@ public class ThankEngine {
 		info.add("Мощность : "+power);
 		info.add("Вес : "+weght);
 	return info;
-	}
-	
-	//PRICE
-	/**
-	 * <p>
-	 * Позволяет получить значение стоимости танкового мотора
-	 * </p>
-	 */
-	public int getPrice() {
-		return price;
-	}
-
-	protected void setPrice(int price) {
-		this.price = price;
 	}
 	
 	// UIDS

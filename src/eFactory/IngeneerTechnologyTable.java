@@ -21,7 +21,7 @@ final class IngeneerTechnologyTable {
 	public IngeneerTechnologyTable() {
 	
 		generateName();
-		
+		random = new Random();
 	}
 
 	// ENGINE TECHNOLOGY

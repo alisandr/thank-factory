@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * </p>
  * 
  * @author Кожуров Андрей
- * @version 0.2
+ * @version 0.3
  */
 
 public class ThankHead {
@@ -16,7 +16,6 @@ public class ThankHead {
 	private int factoryUid;
 	
 	private String name;
-	private int price;
 	private char sloting;
 	
 	private int armour;
@@ -85,19 +84,6 @@ public class ThankHead {
 		this.factoryUid = factoryUid;
 	}
 
-	// PRICE
-	/**
-	 * <p>
-	 * Позволяет получить значение стоимости танковой башни
-	 * </p>
-	 */
-	public int getPrice() {
-		return price;
-	}
-
-	protected void setPrice(int price) {
-		this.price = price;
-	}
 	
 	//SLOTTING
 	/**

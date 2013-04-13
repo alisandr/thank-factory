@@ -14,7 +14,7 @@ package eFactory;
  *            -- танковые траки
  * 
  * @author Кожуров Андрей
- * @version 0.1
+ * @version 0.2
  */
 
 public final class ThankMaschine {
@@ -164,10 +164,6 @@ public final class ThankMaschine {
 			System.out.println("Трак (вес) : " + track.getWeght());
 			System.out.println("Класс компонента :" + track.getName());
 
-			System.out
-					.println("Общая стоимость : "
-							+ (engine.getPrice() + head.getPrice()
-									+ track.getPrice() + price));
 		} else {
 			System.out.println("Не все детали на месте!");
 		}
