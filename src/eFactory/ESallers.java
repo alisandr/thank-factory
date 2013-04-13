@@ -8,7 +8,7 @@ package eFactory;
  *  Через данный класс осуществляется продажа инженеров.
  *  
  *  @author Кожуров Андрей
- *  @version 0.6.0
+ *  @version 0.6.2
  */
 
 import java.util.ArrayList;
@@ -23,13 +23,15 @@ public final class ESallers {
 
 	private int factoryUid;
 
-	private HashMap<Integer, Integer> codeTable;
+	private HashMap<Integer, Integer> moneyPlainDetailTable;
 	private HashMap<Integer, String> priceCode;
 
 	ESallers() {
+
 		factoryUid = 98;
 		createPriceCode();
-		generateCodetable();
+		generateCodetablePlain();
+
 	}
 
 	/**
@@ -71,7 +73,7 @@ public final class ESallers {
 	public ArrayList<String> buyPlainBody(int money, int type, int quantity) {
 		PlainDetails pd = new PlainDetails();
 
-		if (type <=3 &&isAllMoney(money, type * 2, quantity)) {
+		if (type <= 3 && isAllMoney(money, type * 2, quantity)) {
 			addProductionMoney(money);
 			return pd.getBodyCivirPart(quantity, type);
 
@@ -81,7 +83,7 @@ public final class ESallers {
 			return new ArrayList<String>();
 		}
 	}
-	
+
 	/**
 	 * Метод продажи Моторов к машинам.
 	 * 
@@ -99,7 +101,7 @@ public final class ESallers {
 
 		if (type <= 3 && isAllMoney(money, type * 3, quantity)) {
 			addProductionMoney(money);
-			return pd.getEngineCivirPart(quantity,type);
+			return pd.getEngineCivirPart(quantity, type);
 
 		} else {
 			addPenaltyMoney(money);
@@ -126,11 +128,12 @@ public final class ESallers {
 	 */
 	public ArrayList<ThankEngine> buyThankEngine(int money, int typeNumber,
 			int quantity) {
-		
-		if (GlobalConstants.FIRST_ENGINE * quantity > money) {
-			System.out.println("Недостаточное финансирование. Изучайте прайс");
-			addPenaltyMoney(money);
-			return new ArrayList<ThankEngine>();
+		switch (typeNumber) {
+		case 1:
+			if (!isMoneyTrue(GlobalConstants.FIRST_ENGINE, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
 		}
 
 		ArrayList<ThankEngine> sellEngineList = new ArrayList<>();
@@ -140,7 +143,6 @@ public final class ESallers {
 			ttt.setEngineParams(typeNumber, thankEngineForSale);
 			sellEngineList.add(thankEngineForSale);
 		}
-		
 
 		addProductionMoney(money);
 		return sellEngineList;
@@ -165,12 +167,14 @@ public final class ESallers {
 	public ArrayList<ThankTrack> buyThankTrack(int money, int typeNumber,
 			int quantity) {
 
-		if (GlobalConstants.FIRST_TRACK * quantity > money) {
-			System.out.println("Недостаточное финансирование. Изучайте прайс");
-			addPenaltyMoney(money);
-			return new ArrayList<ThankTrack>();
+		switch (typeNumber) {
+		case 1:
+			if (!isMoneyTrue(GlobalConstants.FIRST_TRACK, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
 		}
-		
+
 		ArrayList<ThankTrack> sellTrackList = new ArrayList<>();
 
 		for (int i = quantity; i > 0; i--) {
@@ -202,12 +206,14 @@ public final class ESallers {
 	public ArrayList<ThankHead> buyThankHead(int money, int typeNumber,
 			int quantity) {
 
-		if (GlobalConstants.FIRST_HEAD * quantity > money) {
-			System.out.println("Недостаточное финансирование. Изучайте прайс");
-			addPenaltyMoney(money);
-			return new ArrayList<ThankHead>();
+		switch (typeNumber) {
+		case 1:
+			if (!isMoneyTrue(GlobalConstants.FIRST_HEAD, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
 		}
-		
+
 		ArrayList<ThankHead> sellHeadList = new ArrayList<>();
 
 		for (int i = quantity; i > 0; i--) {
@@ -238,13 +244,20 @@ public final class ESallers {
 	 */
 	public ArrayList<ThankMaschine> buyThankMashine(int money, int typeNumber,
 			int quantity) {
-		
-		if (GlobalConstants.FIRST_BODY * quantity > money) {
-			System.out.println("Недостаточное финансирование. Изучайте прайс");
-			addPenaltyMoney(money);
-			return new ArrayList<ThankMaschine>();
+
+		switch (typeNumber) {
+		case 1:
+			if (!isMoneyTrue(GlobalConstants.FIRST_BODY, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+		case 2:
+			if(!isMoneyTrue(GlobalConstants.SECOND_BODY, money, quantity)){
+				return new ArrayList<>();
+			}
+			
 		}
-		
+
 		ArrayList<ThankMaschine> sellMashineList = new ArrayList<>();
 
 		for (int i = quantity; i > 0; i--) {
@@ -252,7 +265,6 @@ public final class ESallers {
 			ttt.setBodyParams(typeNumber, thankMashineForSale);
 			sellMashineList.add(thankMashineForSale);
 		}
-		
 
 		addProductionMoney(money);
 		return sellMashineList;
@@ -279,7 +291,7 @@ public final class ESallers {
 			System.out.println("Недостаточное финансирование. Изучайте прайс");
 			return new ArrayList<Ingeneer>();
 		}
-		
+
 		ArrayList<Ingeneer> sellIngeneerList = new ArrayList<>();
 
 		for (int i = quantity; i > 0; i--) {
@@ -306,26 +318,41 @@ public final class ESallers {
 	}
 
 	// Generate internal use code equals price - plain details
-	private void generateCodetable() {
-		codeTable = new HashMap<>();
-		codeTable.put(1, 3);
-		codeTable.put(2, 10);
-		codeTable.put(3, 20);
-		codeTable.put(4, 15);
-		codeTable.put(6, 50);
-		codeTable.put(7, 7);
-		codeTable.put(8, 12);
-		codeTable.put(9, 19);
+	private void generateCodetablePlain() {
+		moneyPlainDetailTable = new HashMap<>();
+
+		moneyPlainDetailTable.put(1, 3);
+		moneyPlainDetailTable.put(2, 10);
+		moneyPlainDetailTable.put(3, 20);
+
+		moneyPlainDetailTable.put(4, 15);
+		moneyPlainDetailTable.put(5, 50);
+		moneyPlainDetailTable.put(6, 7);
+
+		moneyPlainDetailTable.put(7, 12);
+		moneyPlainDetailTable.put(8, 16);
+		moneyPlainDetailTable.put(9, 20);
 	}
 
-	// Money review
+	// Money review plain details
 
 	private boolean isAllMoney(int money, int type, int quantity) {
 
-		if ((codeTable.get(type) * quantity) <= money) {
+		if ((moneyPlainDetailTable.get(type) * quantity) <= money) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	// Money review thank details
+	private boolean isMoneyTrue(int typePrice, int money, int quantity) {
+		if (typePrice * quantity > money) {
+			System.out.println("Недостаточное финансирование. Изучайте прайс");
+			addPenaltyMoney(money);
+			return false;
+		} else {
+			return true;
 		}
 	}
 
