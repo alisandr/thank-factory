@@ -1,4 +1,6 @@
-package eFactory;
+package eProduction;
+
+import eFactory.Provider;
 
 
 
@@ -14,7 +16,7 @@ package eFactory;
 public final class Ingeneer {
 
 	private int factoryUid;
-	private Providers mainProviders;
+	private Provider mainProviders;
 
 	private int age;
 	private int armyMechanicExp;
@@ -40,7 +42,7 @@ public final class Ingeneer {
 	 * 
 	 * @return mainBody
 	 */
-	public ThankMaschine makeNewThank(ThankMaschine mainBody,
+	public ThankBody makeNewThank(ThankBody mainBody,
 			ThankEngine installingEngine, ThankHead installingHead,
 			ThankTrack installingTrak, int price) {
 		
@@ -169,7 +171,7 @@ public final class Ingeneer {
 	}
 
 	// MAIN PROVIDER
-	protected void setMainProviders(Providers mainProviders) {
+	protected void setMainProviders(Provider mainProviders) {
 		this.mainProviders = mainProviders;
 	}
 	

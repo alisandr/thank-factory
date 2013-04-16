@@ -30,7 +30,10 @@ package eFactory;
 
 import java.util.Random;
 
-public class Providers {
+import eTechnology.IngeneerTechnologyTable;
+import eTechnology.ThankTechnologyTable;
+
+public final class Provider {
 
 	private Random random;
 
@@ -44,7 +47,7 @@ public class Providers {
 	private long serviceMoney;
 	private long penaltyMoney;
 	
-	public Providers() {
+	public Provider() {
 		initProvider();
 	}
 
@@ -56,11 +59,8 @@ public class Providers {
 		sallers.setFactoryUid(factoryUid);
 		sallers.setMainProvider(this);
 		
-		ttt = new ThankTechnologyTable();
-		ttt.setFactoryUid(factoryUid);
-		
-		itt = new IngeneerTechnologyTable();
-		itt.setFactoryUid(factoryUid);
+		ttt = new ThankTechnologyTable(this);
+		//itt = new IngeneerTechnologyTable(this);
 		
 		sallers.setTtt(ttt);
 		sallers.setItt(itt);
@@ -82,7 +82,7 @@ public class Providers {
 		return productionMoney;
 	}
 
-	protected void addProductionMoney(long money) {
+	void addProductionMoney(long money) {
 		this.productionMoney += money;
 	}
 	
@@ -97,7 +97,7 @@ public class Providers {
 		return serviceMoney;
 	}
 
-	protected void addServiceMoney(long serviceMoney) {
+	void addServiceMoney(long serviceMoney) {
 		this.serviceMoney += serviceMoney;
 	}
 	
@@ -112,8 +112,18 @@ public class Providers {
 		return penaltyMoney;
 	}
 
-	protected void addPenaltyMoney(long penaltyMoney) {
+	void addPenaltyMoney(long penaltyMoney) {
 		this.penaltyMoney += penaltyMoney;
 	}
 
+	
+	/**
+	 * Идентификатор фабрики.
+	 * 
+	 * @return UID (int)
+	 */
+	//UIDS
+	public int getFactoreUid(){
+		return factoryUid;
+	}
 }

@@ -15,11 +15,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import utils.GlobalConstants;
+import eProduction.Ingeneer;
+import eProduction.ThankEngine;
+import eProduction.ThankHead;
+import eProduction.ThankBody;
+import eProduction.ThankTrack;
+
 public final class ESallers {
 
-	private ThankTechnologyTable ttt;
-	private IngeneerTechnologyTable itt;
-	private Providers mainProvider;
+	private Provider mainProvider;
 
 	private int factoryUid;
 
@@ -27,7 +32,6 @@ public final class ESallers {
 	private HashMap<Integer, String> priceCode;
 
 	ESallers() {
-
 		factoryUid = 98;
 		createPriceCode();
 		generateCodetablePlain();
@@ -46,7 +50,7 @@ public final class ESallers {
 	 * 
 	 */
 	public ArrayList<String> buyPlainWheel(int money, int type, int quantity) {
-		PlainDetails pd = new PlainDetails();
+		PlainDetailsTechnology pd = new PlainDetailsTechnology();
 
 		if (type <= 3 && isAllMoney(money, type * 1, quantity)) {
 			addProductionMoney(money);
@@ -71,7 +75,7 @@ public final class ESallers {
 	 * 
 	 */
 	public ArrayList<String> buyPlainBody(int money, int type, int quantity) {
-		PlainDetails pd = new PlainDetails();
+		PlainDetailsTechnology pd = new PlainDetailsTechnology();
 
 		if (type <= 3 && isAllMoney(money, type * 2, quantity)) {
 			addProductionMoney(money);
@@ -97,7 +101,7 @@ public final class ESallers {
 	 */
 
 	public ArrayList<String> buyPlainEngine(int money, int type, int quantity) {
-		PlainDetails pd = new PlainDetails();
+		PlainDetailsTechnology pd = new PlainDetailsTechnology();
 
 		if (type <= 3 && isAllMoney(money, type * 3, quantity)) {
 			addProductionMoney(money);
@@ -242,7 +246,7 @@ public final class ESallers {
 	 *            -- количество заказываемого товара.
 	 * @return ArrayList c ThankMashine -- получаемый модуль.
 	 */
-	public ArrayList<ThankMaschine> buyThankMashine(int money, int typeNumber,
+	public ArrayList<ThankBody> buyThankMashine(int money, int typeNumber,
 			int quantity) {
 
 		switch (typeNumber) {
@@ -258,10 +262,10 @@ public final class ESallers {
 			
 		}
 
-		ArrayList<ThankMaschine> sellMashineList = new ArrayList<>();
+		ArrayList<ThankBody> sellMashineList = new ArrayList<>();
 
 		for (int i = quantity; i > 0; i--) {
-			ThankMaschine thankMashineForSale = new ThankMaschine();
+			ThankBody thankMashineForSale = new ThankBody();
 			ttt.setBodyParams(typeNumber, thankMashineForSale);
 			sellMashineList.add(thankMashineForSale);
 		}
@@ -357,27 +361,22 @@ public final class ESallers {
 	}
 
 	// UIDS
-	protected int getFactoryUid() {
+	/**
+	 * Идентификатор фабрики производителя
+	 * 
+	 * @return uid (int)
+	 */
+	public int getFactoryUid() {
 		return factoryUid;
 	}
 
-	protected void setFactoryUid(int factoryUid) {
+	void setFactoryUid(int factoryUid) {
 		this.factoryUid = factoryUid;
 	}
 
-	// TECHNOLOGY
-	protected void setTtt(ThankTechnologyTable ttt) {
-		this.ttt = ttt;
-	}
-
 	// MAIN PROVIDER
-	protected void setMainProvider(Providers mainProvider) {
+	protected void setMainProvider(Provider mainProvider) {
 		this.mainProvider = mainProvider;
-	}
-
-	// INGENEER TRAINER
-	protected void setItt(IngeneerTechnologyTable itt) {
-		this.itt = itt;
 	}
 
 	// MONEY TRANSFER SECTION
@@ -423,42 +422,42 @@ public final class ESallers {
 	 * 
 	 * @return
 	 */
-	public List<String> getArmyPrice() {
+	public ArrayList<String> getArmyPrice() {
 
 		ArrayList<String> price = new ArrayList<String>();
 
 		StringBuilder builder = new StringBuilder();
-		builder.append("Башня ")
-				.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
-				.append(" : ").append(GlobalConstants.FIRST_HEAD);
-		price.add(builder.toString());
-		builder.setLength(0);
+		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Башня", GlobalConstants.FIRST_HEAD));
+		price.add(priceBuilderHelper(builder,GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Башня", GlobalConstants.SECOND_HEAD));
+		price.add(priceBuilderHelper(builder,GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Башня", GlobalConstants.THIRD_HEAD));
+		price.add(priceBuilderHelper(builder,GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Башня", GlobalConstants.FOURTH_HEAD));
 
-		builder.append("Мотор ")
-				.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
-				.append(" : ").append(GlobalConstants.FIRST_ENGINE);
-		price.add(builder.toString());
-		builder.setLength(0);
+		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Мотор", GlobalConstants.FIRST_ENGINE));
+		price.add(priceBuilderHelper(builder,GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Мотор", GlobalConstants.SECOND_ENGINE));
+		price.add(priceBuilderHelper(builder,GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Мотор", GlobalConstants.THIRD_ENGINE));
+		price.add(priceBuilderHelper(builder,GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Мотор", GlobalConstants.FOURTH_ENGINE));
 
-		builder.append("Траки ")
-				.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
-				.append(" : ").append(GlobalConstants.FIRST_TRACK);
-		price.add(builder.toString());
-		builder.setLength(0);
+		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Траки", GlobalConstants.FIRST_TRACK));
+		price.add(priceBuilderHelper(builder,GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Траки", GlobalConstants.SECOND_TRACK));
+		price.add(priceBuilderHelper(builder,GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Траки", GlobalConstants.THIRD_TRACK));
+		price.add(priceBuilderHelper(builder,GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Траки", GlobalConstants.FOURTH_TRACK));
 
-		builder.append("Корпус ")
-				.append(GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME)
-				.append(" : ").append(GlobalConstants.FIRST_BODY);
-		price.add(builder.toString());
-		builder.setLength(0);
+		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Корпус", GlobalConstants.FIRST_BODY));
+		price.add(priceBuilderHelper(builder,GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Корпус", GlobalConstants.SECOND_BODY));
+		price.add(priceBuilderHelper(builder,GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Корпус", GlobalConstants.THIRD_BODY));
+		price.add(priceBuilderHelper(builder,GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Корпус", GlobalConstants.FOURTH_BODY));
 
-		builder.append("Инженер ")
-				.append(GlobalConstants.FIRST_LEVEL_INGENEER_NAME)
-				.append(" : ").append(GlobalConstants.FIRST_INGENEER);
-		price.add(builder.toString());
-		builder.setLength(0);
+		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_INGENEER_NAME, "Инженер", GlobalConstants.FIRST_INGENEER));
 
 		return price;
 	}
 
+	private String priceBuilderHelper(StringBuilder builder, String type ,String name, int price){
+		builder.setLength(0);
+
+		builder.append(name)
+		.append(" : ").append(type+" ").append(price).append(" $");
+		return builder.toString();
+	}
+	
 }
