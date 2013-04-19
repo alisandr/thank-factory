@@ -23,24 +23,21 @@ package eFactory;
  * 
  * Внимание, инженер не сможет собрать гражданские виды техники.
  * 
- * @version 0.3
+ * @version 0.7
  * 
  * @author Андрей Кожуров
  */
 
 import java.util.Random;
 
-import eTechnology.IngeneerTechnologyTable;
-import eTechnology.ThankTechnologyTable;
+import eUtils.OnMoneyTransfer;
 
-public final class Provider {
+public final class Provider implements OnMoneyTransfer {
 
 	private Random random;
 
 	private ESallers sallers;
-	private ThankTechnologyTable ttt;
-	private IngeneerTechnologyTable itt;
-	
+
 	private int factoryUid;
 	
 	private long productionMoney;
@@ -55,16 +52,8 @@ public final class Provider {
 		random = new Random();
 		factoryUid = random.nextInt(10000)+100;
 		
-		sallers = new ESallers();
-		sallers.setFactoryUid(factoryUid);
-		sallers.setMainProvider(this);
+		sallers = new ESallers(this);
 		
-		ttt = new ThankTechnologyTable(this);
-		//itt = new IngeneerTechnologyTable(this);
-		
-		sallers.setTtt(ttt);
-		sallers.setItt(itt);
-
 	}
 
 	public ESallers getSallers() {
@@ -96,10 +85,7 @@ public final class Provider {
 	public long getServiceMoney() {
 		return serviceMoney;
 	}
-
-	void addServiceMoney(long serviceMoney) {
-		this.serviceMoney += serviceMoney;
-	}
+	
 	
 	/**
 	 * Колечество денег полученных на штрафах и неустойках.
@@ -123,7 +109,12 @@ public final class Provider {
 	 * @return UID (int)
 	 */
 	//UIDS
-	public int getFactoreUid(){
+	public int getFactoryUid(){
 		return factoryUid;
+	}
+
+	@Override
+	public void moneyTransact(int money) {
+		serviceMoney +=money;
 	}
 }

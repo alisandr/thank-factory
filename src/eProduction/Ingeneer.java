@@ -1,6 +1,9 @@
 package eProduction;
 
+import java.util.ArrayList;
+
 import eFactory.Provider;
+import eUtils.OnMoneyTransfer;
 
 
 
@@ -10,23 +13,22 @@ import eFactory.Provider;
  * 
  * @author Андрей Кожуров
  * 
- * @version 0.2
+ * @version 0.7
  */
 
-public final class Ingeneer {
+public final class Ingeneer extends WorkerModel {
 
-	private int factoryUid;
 	private Provider mainProviders;
-
-	private int age;
+	private OnMoneyTransfer hostBank;
+	
+	private int completeBuilds;
 	private int armyMechanicExp;
-	private int civilMechanicExp;
-	private String name;
-	private String status;
-	private int price;
 
-	public Ingeneer() {
-		factoryUid = 99;
+	Ingeneer(Provider provider) {
+		mainProviders = provider;
+		factoryUid = mainProviders.getFactoryUid();
+		hostBank = mainProviders;
+		completeBuilds = 0;
 	}
 
 	/**
@@ -59,6 +61,7 @@ public final class Ingeneer {
 			if (mainBody.showComplexWeghtUp()) {
 				armyMechanicExp += price/100 ;
 				addServiceMoney(price);
+				completeBuilds++;
 				return mainBody;
 			} else {
 				System.out.println("Ошибочная конфигурация техники!!");
@@ -71,115 +74,77 @@ public final class Ingeneer {
 		}
 	}
 
-	// UIDS
-	protected int getFactoryUid() {
-		return factoryUid;
-	}
-
-	protected void setFactoryUid(int factoryUid) {
-		this.factoryUid = factoryUid;
-	}
-
-	// AGE
-	/**
-	 * Позволяет получть параметр "Возраст".
-	 * 
-	 * @return String
-	 */
-	public int getAge() {
+	//AGE
+	int getAge() {
 		return age;
 	}
-
-	protected void setAge(int age) {
+	
+	void setAge(int age) {
 		this.age = age;
 	}
-
-	/**
-	 * Позволяет получть значение параметра "Армейский опыт".
-	 * Данный параметр необходим для сборки сложной армейской
-	 * техники и работы в армейских цехах.
-	 * 
-	 * @return int
-	 */
-	public int getArmyMechanicExp() {
+	
+	//Army exp
+	int getArmyMechanicExp() {
 		return armyMechanicExp;
 	}
 
-	protected void setArmyMechanicExp(int armyMechanicExp) {
+	void setArmyMechanicExp(int armyMechanicExp) {
 		this.armyMechanicExp = armyMechanicExp;
 	}
-
-	/**
-	 * Позволяет получть значение параметра "Гражданский опыт".
-	 * Данный параметр необходим для сборки сложной гражданской техники,
-	 * работы в супер-цехах и проведения ремонтный работ
-	 * 
-	 * @return int
-	 */
-	public int getCivilMechanicExp() {
+	// Civil exp
+	int getCivilMechanicExp() {
 		return civilMechanicExp;
 	}
 
-	protected void setCivilMechanicExp(int civilMechanicExp) {
+	void setCivilMechanicExp(int civilMechanicExp) {
 		this.civilMechanicExp = civilMechanicExp;
 	}
 
 	// NAME
-	
-	/**
-	 * Позволяет получть значение параметра "Имя".
-	 * 
-	 * @return String
-	 */
-	public String getName() {
+	String getName() {
 		return name;
 	}
 
-	protected void setName(String name) {
+	void setName(String name) {
 		this.name = name;
 	}
 
 	//STATUS
-	/**
-	 * Позволяет получть значение параметра "Статус".
-	 * Данный параметр влияет на допуск к различному типу цехов.
-	 * На данный момент не используется.
-	 * 
-	 * @return String
-	 */
-	
-	protected String getStatus() {
+	String getStatus() {
 		return status;
 	}
 
-	protected void setStatus(String status) {
+	void setStatus(String status) {
 		this.status = status;
 	}
 
-	//CASHE
-	/**
-	 * Позволяет получть значение параметра "Стоимость".
-	 * 
-	 * @return int
-	 */
-	public int getPrice() {
-		return price;
-	}
-
-	protected void setPrice(int cashe) {
-		this.price = cashe;
-	}
-
-	// MAIN PROVIDER
-	protected void setMainProviders(Provider mainProviders) {
-		this.mainProviders = mainProviders;
-	}
-	
-
 	// MONEY TRANSFER BLOCK
 	private void addServiceMoney(int incomeMoney){
-		if (mainProviders != null){
-		mainProviders.addServiceMoney(incomeMoney);
+		if (hostBank == null){
+			System.out.println("Не могу связаться с базой!");
+		}else{
+			hostBank.moneyTransact(incomeMoney);
 		}
+	}
+	
+	public void showDetails(ThankBody tb){
+		for (String th : tb.getModuleInfo()){
+			System.out.println(th);
+		}
+		
+	}
+
+	@Override
+	public ArrayList<String> getResume() {
+		ArrayList<String> resumeList = new ArrayList<>();
+		resumeList.add("Имя : "+name);
+		resumeList.add("Статус : "+status);
+		resumeList.add(String.valueOf("Имя : "+age));
+		resumeList.add(String.valueOf("Гражданский опыт : "+civilMechanicExp));
+		resumeList.add(String.valueOf("Военный опыт : "+armyMechanicExp));
+		resumeList.add(String.valueOf("Успешные сборки : "+completeBuilds));
+		
+		return resumeList;
+		
 	}
 }

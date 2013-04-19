@@ -8,34 +8,43 @@ package eFactory;
  *  Через данный класс осуществляется продажа инженеров.
  *  
  *  @author Кожуров Андрей
- *  @version 0.6.2
+ *  @version 0.7
  */
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import utils.GlobalConstants;
+import eProduction.Conveyor;
 import eProduction.Ingeneer;
+import eProduction.Scholl;
 import eProduction.ThankEngine;
 import eProduction.ThankHead;
 import eProduction.ThankBody;
 import eProduction.ThankTrack;
+import eUtils.GlobalConstants;
 
 public final class ESallers {
 
 	private Provider mainProvider;
+	private Conveyor conveyor;
+	private Scholl scholl;
 
 	private int factoryUid;
 
 	private HashMap<Integer, Integer> moneyPlainDetailTable;
 	private HashMap<Integer, String> priceCode;
 
-	ESallers() {
-		factoryUid = 98;
+	ESallers(Provider hostProvider) {
+
+		mainProvider = hostProvider;
+		factoryUid = mainProvider.getFactoryUid();
+
+		conveyor = new Conveyor(hostProvider);
+		scholl = new Scholl(hostProvider);
+
 		createPriceCode();
 		generateCodetablePlain();
-
 	}
 
 	/**
@@ -50,15 +59,14 @@ public final class ESallers {
 	 * 
 	 */
 	public ArrayList<String> buyPlainWheel(int money, int type, int quantity) {
-		PlainDetailsTechnology pd = new PlainDetailsTechnology();
 
 		if (type <= 3 && isAllMoney(money, type * 1, quantity)) {
 			addProductionMoney(money);
-			return pd.getWheelCivirPart(quantity, type);
+			return conveyor.buyWheelCivirPart(quantity, type, this);
 
 		} else {
 			addPenaltyMoney(money);
-			System.out.println("Недостаточное финансирование. Изучайте прайс");
+			System.out.println("Ошибка. Изучайте прайс");
 			return new ArrayList<String>();
 		}
 	}
@@ -75,11 +83,10 @@ public final class ESallers {
 	 * 
 	 */
 	public ArrayList<String> buyPlainBody(int money, int type, int quantity) {
-		PlainDetailsTechnology pd = new PlainDetailsTechnology();
 
 		if (type <= 3 && isAllMoney(money, type * 2, quantity)) {
 			addProductionMoney(money);
-			return pd.getBodyCivirPart(quantity, type);
+			return conveyor.buyBodyCivirPart(quantity, type, this);
 
 		} else {
 			addPenaltyMoney(money);
@@ -101,11 +108,10 @@ public final class ESallers {
 	 */
 
 	public ArrayList<String> buyPlainEngine(int money, int type, int quantity) {
-		PlainDetailsTechnology pd = new PlainDetailsTechnology();
 
 		if (type <= 3 && isAllMoney(money, type * 3, quantity)) {
 			addProductionMoney(money);
-			return pd.getEngineCivirPart(quantity, type);
+			return conveyor.buyEngineCivirPart(quantity, type, this);
 
 		} else {
 			addPenaltyMoney(money);
@@ -115,11 +121,8 @@ public final class ESallers {
 	}
 
 	/**
-	 * <p>
 	 * Позволяет осуществить покупку танкового модуля "Двигатель"
-	 * </p>
-	 * Перед покупкой необходимо ознакомиться со списком продаваемой продукции,
-	 * ценами и технологией.
+	 * 
 	 * 
 	 * @param money
 	 *            -- вносима при покупке сумма;
@@ -128,7 +131,7 @@ public final class ESallers {
 	 * @param quanrity
 	 *            -- количество заказываемого товара.
 	 * 
-	 * @return ArrayList c ThankEngine -- получаемый модуль.
+	 * @return ArrayList<ThankEngine> -- получаемый модуль.
 	 */
 	public ArrayList<ThankEngine> buyThankEngine(int money, int typeNumber,
 			int quantity) {
@@ -138,26 +141,33 @@ public final class ESallers {
 				return new ArrayList<>();
 			}
 			break;
+		case 2:
+			if (!isMoneyTrue(GlobalConstants.SECOND_ENGINE, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+		case 3:
+			if (!isMoneyTrue(GlobalConstants.THIRD_ENGINE, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+		case 4:
+			if (!isMoneyTrue(GlobalConstants.FOURTH_ENGINE, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+
 		}
 
-		ArrayList<ThankEngine> sellEngineList = new ArrayList<>();
-
-		for (int i = quantity; i >= 0; i--) {
-			ThankEngine thankEngineForSale = new ThankEngine();
-			ttt.setEngineParams(typeNumber, thankEngineForSale);
-			sellEngineList.add(thankEngineForSale);
-		}
-
+		ArrayList<ThankEngine> sellEngineList = conveyor.buyThankEngine(
+				typeNumber, quantity, this);
+		
 		addProductionMoney(money);
 		return sellEngineList;
 	}
 
 	/**
-	 * <p>
 	 * Позволяет осуществить покупку танкового модуля "Траки"
-	 * </p>
-	 * Перед покупкой необходимо ознакомиться со списком продаваемой продукции,
-	 * ценами и технологией.
 	 * 
 	 * @param money
 	 *            -- вносима при покупке сумма;
@@ -177,26 +187,32 @@ public final class ESallers {
 				return new ArrayList<>();
 			}
 			break;
+		case 2:
+			if (!isMoneyTrue(GlobalConstants.SECOND_TRACK, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+		case 3:
+			if (!isMoneyTrue(GlobalConstants.THIRD_TRACK, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+		case 4:
+			if (!isMoneyTrue(GlobalConstants.FOURTH_TRACK, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
 		}
 
-		ArrayList<ThankTrack> sellTrackList = new ArrayList<>();
-
-		for (int i = quantity; i > 0; i--) {
-			ThankTrack thankThrackForSale = new ThankTrack();
-			ttt.setTrackParams(typeNumber, thankThrackForSale);
-			sellTrackList.add(thankThrackForSale);
-		}
+		ArrayList<ThankTrack> sellTrackList = conveyor.buyThankTrack(
+				typeNumber, quantity, this);
 
 		addProductionMoney(money);
 		return sellTrackList;
 	}
 
 	/**
-	 * <p>
 	 * Позволяет осуществить покупку танкового модуля "Башня"
-	 * </p>
-	 * Перед покупкой необходимо ознакомиться со списком продаваемой продукции,
-	 * ценами и технологией.
 	 * 
 	 * @param money
 	 *            -- вносима при покупке сумма;
@@ -205,7 +221,7 @@ public final class ESallers {
 	 * 
 	 * @param quanrity
 	 *            -- количество заказываемого товара.
-	 * @return ArrayList c ThankHead -- получаемый модуль.
+	 * @return ArrayList <ThankHead> -- получаемый модуль.
 	 */
 	public ArrayList<ThankHead> buyThankHead(int money, int typeNumber,
 			int quantity) {
@@ -216,26 +232,35 @@ public final class ESallers {
 				return new ArrayList<>();
 			}
 			break;
+		case 2:
+			if (!isMoneyTrue(GlobalConstants.SECOND_HEAD, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+		case 3:
+			if (!isMoneyTrue(GlobalConstants.THIRD_HEAD, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+		case 4:
+			if (!isMoneyTrue(GlobalConstants.FOURTH_HEAD, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
 		}
 
-		ArrayList<ThankHead> sellHeadList = new ArrayList<>();
-
-		for (int i = quantity; i > 0; i--) {
-			ThankHead thankHeadForSale = new ThankHead();
-			ttt.setHeadParams(typeNumber, thankHeadForSale);
-			sellHeadList.add(thankHeadForSale);
-		}
+		ArrayList<ThankHead> sellHeadList = conveyor.buyThankHead(typeNumber,
+				quantity, this);
 
 		addProductionMoney(money);
 		return sellHeadList;
 	}
 
 	/**
-	 * <p>
 	 * Позволяет осуществить покупку танкового модуля "Корпус танка"
-	 * </p>
-	 * Перед покупкой необходимо ознакомиться со списком продаваемой продукции,
-	 * ценами и технологией.
+	 * 
+	 * Данный класс является базовым гласом для сборки танка, в данный модуль
+	 * осуществляется установка всех остальных модулей.
 	 * 
 	 * @param money
 	 *            -- вносима при покупке сумма;
@@ -256,19 +281,23 @@ public final class ESallers {
 			}
 			break;
 		case 2:
-			if(!isMoneyTrue(GlobalConstants.SECOND_BODY, money, quantity)){
+			if (!isMoneyTrue(GlobalConstants.SECOND_BODY, money, quantity)) {
 				return new ArrayList<>();
 			}
-			
+			break;
+		case 3:
+			if (!isMoneyTrue(GlobalConstants.THIRD_BODY, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
+		case 4:
+			if (!isMoneyTrue(GlobalConstants.FOURTH_BODY, money, quantity)) {
+				return new ArrayList<>();
+			}
+			break;
 		}
 
-		ArrayList<ThankBody> sellMashineList = new ArrayList<>();
-
-		for (int i = quantity; i > 0; i--) {
-			ThankBody thankMashineForSale = new ThankBody();
-			ttt.setBodyParams(typeNumber, thankMashineForSale);
-			sellMashineList.add(thankMashineForSale);
-		}
+		ArrayList<ThankBody> sellMashineList = conveyor.buyThankBody(typeNumber, quantity, this);
 
 		addProductionMoney(money);
 		return sellMashineList;
@@ -296,15 +325,7 @@ public final class ESallers {
 			return new ArrayList<Ingeneer>();
 		}
 
-		ArrayList<Ingeneer> sellIngeneerList = new ArrayList<>();
-
-		for (int i = quantity; i > 0; i--) {
-
-			Ingeneer newIngeneer = new Ingeneer();
-			itt.generatePlainIngeneer(newIngeneer);
-
-			sellIngeneerList.add(newIngeneer);
-		}
+		ArrayList<Ingeneer> sellIngeneerList = scholl.buyIngeneers(1, quantity, this);
 
 		addProductionMoney(money);
 		return sellIngeneerList;
@@ -360,23 +381,12 @@ public final class ESallers {
 		}
 	}
 
-	// UIDS
-	/**
-	 * Идентификатор фабрики производителя
-	 * 
-	 * @return uid (int)
-	 */
-	public int getFactoryUid() {
-		return factoryUid;
-	}
-
-	void setFactoryUid(int factoryUid) {
-		this.factoryUid = factoryUid;
-	}
-
-	// MAIN PROVIDER
-	protected void setMainProvider(Provider mainProvider) {
-		this.mainProvider = mainProvider;
+	public boolean reviewChain(Provider provider) {
+		if (provider.getFactoryUid() == factoryUid) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// MONEY TRANSFER SECTION
@@ -398,7 +408,7 @@ public final class ESallers {
 	 * 
 	 * @return
 	 */
-	public List<String> getFullPrice() {
+	public List<String> getPlainDetailPrice() {
 
 		ArrayList<String> price = new ArrayList<String>();
 
@@ -427,37 +437,72 @@ public final class ESallers {
 		ArrayList<String> price = new ArrayList<String>();
 
 		StringBuilder builder = new StringBuilder();
-		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Башня", GlobalConstants.FIRST_HEAD));
-		price.add(priceBuilderHelper(builder,GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Башня", GlobalConstants.SECOND_HEAD));
-		price.add(priceBuilderHelper(builder,GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Башня", GlobalConstants.THIRD_HEAD));
-		price.add(priceBuilderHelper(builder,GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Башня", GlobalConstants.FOURTH_HEAD));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Башня",
+				GlobalConstants.FIRST_HEAD));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Башня",
+				GlobalConstants.SECOND_HEAD));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Башня",
+				GlobalConstants.THIRD_HEAD));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Башня",
+				GlobalConstants.FOURTH_HEAD));
 
-		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Мотор", GlobalConstants.FIRST_ENGINE));
-		price.add(priceBuilderHelper(builder,GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Мотор", GlobalConstants.SECOND_ENGINE));
-		price.add(priceBuilderHelper(builder,GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Мотор", GlobalConstants.THIRD_ENGINE));
-		price.add(priceBuilderHelper(builder,GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Мотор", GlobalConstants.FOURTH_ENGINE));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Мотор",
+				GlobalConstants.FIRST_ENGINE));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Мотор",
+				GlobalConstants.SECOND_ENGINE));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Мотор",
+				GlobalConstants.THIRD_ENGINE));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Мотор",
+				GlobalConstants.FOURTH_ENGINE));
 
-		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Траки", GlobalConstants.FIRST_TRACK));
-		price.add(priceBuilderHelper(builder,GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Траки", GlobalConstants.SECOND_TRACK));
-		price.add(priceBuilderHelper(builder,GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Траки", GlobalConstants.THIRD_TRACK));
-		price.add(priceBuilderHelper(builder,GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Траки", GlobalConstants.FOURTH_TRACK));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Траки",
+				GlobalConstants.FIRST_TRACK));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Траки",
+				GlobalConstants.SECOND_TRACK));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Траки",
+				GlobalConstants.THIRD_TRACK));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Траки",
+				GlobalConstants.FOURTH_TRACK));
 
-		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Корпус", GlobalConstants.FIRST_BODY));
-		price.add(priceBuilderHelper(builder,GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Корпус", GlobalConstants.SECOND_BODY));
-		price.add(priceBuilderHelper(builder,GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Корпус", GlobalConstants.THIRD_BODY));
-		price.add(priceBuilderHelper(builder,GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Корпус", GlobalConstants.FOURTH_BODY));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FIRST_LEVEL_ARMY_PARTS_NAME, "Корпус",
+				GlobalConstants.FIRST_BODY));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.SECOND_LEVEL_ARMY_PARTS_NAME, "Корпус",
+				GlobalConstants.SECOND_BODY));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.THIRD_LEVEL_ARMY_PARTS_NAME, "Корпус",
+				GlobalConstants.THIRD_BODY));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FOURTH_LEVEL_ARMY_PARTS_NAME, "Корпус",
+				GlobalConstants.FOURTH_BODY));
 
-		price.add(priceBuilderHelper(builder,GlobalConstants.FIRST_LEVEL_INGENEER_NAME, "Инженер", GlobalConstants.FIRST_INGENEER));
+		price.add(priceBuilderHelper(builder,
+				GlobalConstants.FIRST_LEVEL_INGENEER_NAME, "Инженер",
+				GlobalConstants.FIRST_INGENEER));
 
 		return price;
 	}
 
-	private String priceBuilderHelper(StringBuilder builder, String type ,String name, int price){
+	private String priceBuilderHelper(StringBuilder builder, String type,
+			String name, int price) {
 		builder.setLength(0);
 
-		builder.append(name)
-		.append(" : ").append(type+" ").append(price).append(" $");
+		builder.append(name).append(" : ").append(type).append(" ").append(price)
+				.append(" $");
 		return builder.toString();
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-package utils;
+package eUtils;
 
 /**
  * Класс глобальных переменных, цен и имён.

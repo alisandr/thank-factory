@@ -2,21 +2,26 @@ package eProduction;
 
 import java.util.ArrayList;
 
-import utils.GlobalConstants;
 import eFactory.ESallers;
 import eFactory.Provider;
+import eUtils.GlobalConstants;
 
 public final class Conveyor {
 
 	private Provider provider;
 	private int factoryUid;
 
-	public Conveyor(Provider iprovider) {
-		this.provider = iprovider;
-		factoryUid = provider.getFactoreUid();
+	public Conveyor(Provider provider) {
+		this.provider = provider;
+		factoryUid = this.provider.getFactoryUid();
 	}
 
-	public ArrayList<String> getWheelCivirPart(int quantity, int type) {
+	public ArrayList<String> buyWheelCivirPart(int quantity, int type,
+			ESallers sallers) {
+
+		if (!sallers.reviewChain(provider)) {
+			return null;
+		}
 
 		switch (type) {
 		case 1:
@@ -30,7 +35,12 @@ public final class Conveyor {
 		return new ArrayList<String>();
 	}
 
-	public ArrayList<String> getBodyCivirPart(int quantity, int type) {
+	public ArrayList<String> buyBodyCivirPart(int quantity, int type,
+			ESallers sallers) {
+
+		if (!sallers.reviewChain(provider)) {
+			return null;
+		}
 
 		switch (type) {
 		case 1:
@@ -43,7 +53,12 @@ public final class Conveyor {
 		return new ArrayList<String>();
 	}
 
-	public ArrayList<String> getEngineCivirPart(int quantity, int type) {
+	public ArrayList<String> buyEngineCivirPart(int quantity, int type,
+			ESallers sallers) {
+
+		if (!sallers.reviewChain(provider)) {
+			return null;
+		}
 
 		switch (type) {
 		case 1:
@@ -63,10 +78,10 @@ public final class Conveyor {
 	}
 
 	// ENGINE TECHNOLOGY
-	public ArrayList<ThankEngine> setEngineParams(int type, int quantity,
+	public ArrayList<ThankEngine> buyThankEngine(int type, int quantity,
 			ESallers sallers) {
 
-		if (sallers.getFactoryUid() != factoryUid) {
+		if (!sallers.reviewChain(provider)) {
 			System.out.println("Нарушена целостность производственной цепочки");
 			return null;
 		}
@@ -74,7 +89,7 @@ public final class Conveyor {
 		ArrayList<ThankEngine> outEnginsList = new ArrayList<>();
 		switch (type) {
 		case 1:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankEngine newEngine = new ThankEngine();
 
 				newEngine.setFactoryUid(factoryUid);
@@ -88,7 +103,7 @@ public final class Conveyor {
 			}
 			return outEnginsList;
 		case 2:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankEngine newEngine = new ThankEngine();
 
 				newEngine.setFactoryUid(factoryUid);
@@ -103,7 +118,7 @@ public final class Conveyor {
 			return outEnginsList;
 
 		case 3:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankEngine newEngine = new ThankEngine();
 
 				newEngine.setFactoryUid(factoryUid);
@@ -118,7 +133,7 @@ public final class Conveyor {
 			return outEnginsList;
 
 		case 4:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankEngine newEngine = new ThankEngine();
 
 				newEngine.setFactoryUid(factoryUid);
@@ -137,10 +152,10 @@ public final class Conveyor {
 	}
 
 	// TRACK TECHNOLOGY
-	protected ArrayList<ThankTrack> setTrackParams(int type, int quantity,
+	public ArrayList<ThankTrack> buyThankTrack(int type, int quantity,
 			ESallers sallers) {
 
-		if (sallers.getFactoryUid() != factoryUid) {
+		if (!sallers.reviewChain(provider)) {
 			System.out.println("Нарушена целостность производственной цепочки");
 			return null;
 		}
@@ -149,7 +164,7 @@ public final class Conveyor {
 
 		switch (type) {
 		case 1:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankTrack newTrack = new ThankTrack();
 
 				newTrack.setFactoryUid(factoryUid);
@@ -163,7 +178,7 @@ public final class Conveyor {
 			return outTrackList;
 
 		case 2:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankTrack newTrack = new ThankTrack();
 
 				newTrack.setFactoryUid(factoryUid);
@@ -176,7 +191,7 @@ public final class Conveyor {
 			return outTrackList;
 
 		case 3:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankTrack newTrack = new ThankTrack();
 
 				newTrack.setFactoryUid(factoryUid);
@@ -190,7 +205,7 @@ public final class Conveyor {
 			return outTrackList;
 
 		case 4:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankTrack newTrack = new ThankTrack();
 
 				newTrack.setFactoryUid(factoryUid);
@@ -207,10 +222,10 @@ public final class Conveyor {
 	}
 
 	// HEAD TECHNOLOGY
-	protected ArrayList<ThankHead> setHeadParams(int type, int quantity,
+	public ArrayList<ThankHead> buyThankHead(int type, int quantity,
 			ESallers sallers) {
 
-		if (sallers.getFactoryUid() != factoryUid) {
+		if (!sallers.reviewChain(provider)) {
 			System.out.println("Нарушена целостность производственной цепочки");
 			return null;
 		}
@@ -219,7 +234,7 @@ public final class Conveyor {
 
 		switch (type) {
 		case 1:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankHead newHead = new ThankHead();
 
 				newHead.setFactoryUid(factoryUid);
@@ -233,7 +248,7 @@ public final class Conveyor {
 			return outHeadList;
 
 		case 2:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankHead newHead = new ThankHead();
 
 				newHead.setFactoryUid(factoryUid);
@@ -247,7 +262,7 @@ public final class Conveyor {
 			return outHeadList;
 
 		case 3:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankHead newHead = new ThankHead();
 
 				newHead.setFactoryUid(factoryUid);
@@ -261,7 +276,7 @@ public final class Conveyor {
 			return outHeadList;
 
 		case 4:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankHead newHead = new ThankHead();
 
 				newHead.setFactoryUid(factoryUid);
@@ -278,10 +293,10 @@ public final class Conveyor {
 	}
 
 	// BODY TECHNOLOGY
-	protected ArrayList<ThankBody> setBodyParams(int type, int quantity,
+	public ArrayList<ThankBody> buyThankBody(int type, int quantity,
 			ESallers sallers) {
 
-		if (sallers.getFactoryUid() != factoryUid) {
+		if (!sallers.reviewChain(provider)) {
 			System.out.println("Нарушена целостность производственной цепочки");
 			return null;
 		}
@@ -290,7 +305,7 @@ public final class Conveyor {
 
 		switch (type) {
 		case 1:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankBody newThankBody = new ThankBody();
 
 				newThankBody.setFactoryUid(factoryUid);
@@ -305,7 +320,7 @@ public final class Conveyor {
 			return outBidyList;
 
 		case 2:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankBody newThankBody = new ThankBody();
 
 				newThankBody.setFactoryUid(factoryUid);
@@ -320,7 +335,7 @@ public final class Conveyor {
 			return outBidyList;
 
 		case 3:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankBody newThankBody = new ThankBody();
 
 				newThankBody.setFactoryUid(factoryUid);
@@ -335,7 +350,7 @@ public final class Conveyor {
 			return outBidyList;
 
 		case 4:
-			for (int i = quantity; i > quantity; i--) {
+			for (int i = 0; i < quantity; i++) {
 				ThankBody newThankBody = new ThankBody();
 
 				newThankBody.setFactoryUid(factoryUid);
