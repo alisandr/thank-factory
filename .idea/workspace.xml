@@ -7,17 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="686530b9-23e0-4a09-8c3a-88fe6e6e3a41" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/GlobalConstants.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/Ingeneer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/IngeneerTechnologyTable.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/PlainDetails.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/Providers.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/ThankEngine.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/ThankHead.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/ThankMaschine.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/ThankTechnologyTable.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/eFactory/ThankTrack.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eFactory/ESallers.java" afterPath="$PROJECT_DIR$/src/eFactory/ESallers.java" />
     </list>
     <ignored path="TankFactory.iws" />
@@ -85,11 +74,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ESallers.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ESallers.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/eFactory/ESallers.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="59" selection-start="759" selection-end="759" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="556" column="14" selection-start="18443" selection-end="18443" vertical-scroll-proportion="0.7569444">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,10 +94,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Archive.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Archive.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/eFactory/Archive.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.034722224">
+            <state line="2" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -293,7 +284,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1026" height="582" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -301,7 +292,7 @@
       <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24414062" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24414062" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
@@ -383,7 +374,9 @@
     <entry file="file://$PROJECT_DIR$/src/eFactory/ESallers.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="31" column="59" selection-start="759" selection-end="759" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -411,34 +404,33 @@
     <entry file="file://$PROJECT_DIR$/src/eFactory/ESallers.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/eFactory/ESallers.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/eFactory/ESallers.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/eFactory/Provider.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="46" column="19" selection-start="1248" selection-end="1248" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/eFactory/ESallers.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="59" selection-start="759" selection-end="759" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -452,8 +444,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/eFactory/Archive.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.034722224">
+        <state line="2" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eFactory/ESallers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="556" column="14" selection-start="18443" selection-end="18443" vertical-scroll-proportion="0.7569444">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
