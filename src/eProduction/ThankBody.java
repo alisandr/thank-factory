@@ -1,9 +1,11 @@
-package eFactory;
+package eProduction;
+
+import java.util.ArrayList;
 
 /**
- * <p>
+ * 
  * Класс описывающий модель корпуса танка, для установки основных модулей
- * </p>
+ * 
  * В данной версии необходимо наличие 3 видов оборудования
  * 
  * @param Engine
@@ -14,95 +16,61 @@ package eFactory;
  *            -- танковые траки
  * 
  * @author Кожуров Андрей
- * @version 0.2
+ * @version 0.7
  */
 
-public final class ThankMaschine {
-
-	private int factoryUid;
-	private String name;
-
-	private int price;
+public final class ThankBody extends WarConstruction {
 
 	private int bodyArmour;
-	private int weght;
-	private char sloting;
 
 	private ThankEngine engine;
 	private ThankHead head;
 	private ThankTrack track;
+	
+	public ThankBody() {}
 
-	/**
-	 * <p>
-	 * Позволяет получить значение брони танкового корпуса
-	 * </p>
-	 */
-	public int getBodyArmour() {
+	// Body armour
+	int getBodyArmour() {
 		return bodyArmour;
 	}
 
-	protected void setBodyArmour(int bodyArmour) {
+	void setBodyArmour(int bodyArmour) {
 		this.bodyArmour = bodyArmour;
 	}
 
 	// UIDS
-	protected int getFactoryUid() {
+	int getFactoryUid() {
 		return factoryUid;
 	}
 
-	protected void setFactoryUid(int thankUid) {
+	void setFactoryUid(int thankUid) {
 		this.factoryUid = thankUid;
 	}
 
 	// NAME
-	/**
-	 * <p>
-	 * Позволяет получить название танкового корпуса
-	 * </p>
-	 */
-	public String getName() {
-		return name;
+	String getModelType() {
+		return modelType;
 	}
 
-	protected void setName(String name) {
-		this.name = name;
-	}
-
-	// PRICE
-
-	/**
-	 * <p>
-	 * Позволяет получить значение стоимости танкового корпуса
-	 * </p>
-	 */
-	public int getPrice() {
-		return price;
-	}
-
-	protected void setPrice(int price) {
-		this.price = price;
+	protected void setModekType(String modelType) {
+		this.modelType = modelType;
 	}
 
 	// WEGHT
-	protected void setWeght(int weght) {
+	void setWeght(int weght) {
 		this.weght = weght;
 	}
 
-	/**
-	 * <p>
-	 * Позволяет получить значение веса танкового корпуса
-	 * </p>
-	 */
-	public int getWeght() {
+	int getWeght() {
 		return weght;
 	}
 
 	// INSTALL MOTOR
-	protected ThankEngine getEngine() {
+	ThankEngine getEngine() {
 		return engine;
 	}
 
-	protected void setEngine(ThankEngine engine) {
+	void setEngine(ThankEngine engine) {
 		if (engine.getSloting() == sloting) {
 			this.engine = engine;
 		} else {
@@ -111,11 +79,11 @@ public final class ThankMaschine {
 	}
 
 	// INSTALL HEAD
-	protected ThankHead getHead() {
+	ThankHead getHead() {
 		return head;
 	}
 
-	protected void setHead(ThankHead head) {
+	void setHead(ThankHead head) {
 		if (head.getSloting() == sloting) {
 			this.head = head;
 		} else {
@@ -124,11 +92,11 @@ public final class ThankMaschine {
 	}
 
 	// INSTALL TRACK
-	protected ThankTrack getTrack() {
+	ThankTrack getTrack() {
 		return track;
 	}
 
-	protected void setTrack(ThankTrack track) {
+	void setTrack(ThankTrack track) {
 		if (track.getSloting() == sloting) {
 			this.track = track;
 		} else {
@@ -153,16 +121,16 @@ public final class ThankMaschine {
 
 			System.out.println("Мотор (лс) : " + engine.getPower());
 			System.out.println("Мотор (вес) : " + engine.getWeght());
-			System.out.println("Класс компонента :" + engine.getName());
+			System.out.println("Класс компонента :" + engine.getModelType());
 
 			System.out.println("Башня (броня) :" + head.getArmour());
 			System.out.println("Башня (вес) :" + head.getWeght());
-			System.out.println("Класс компонента :" + head.getName());
+			System.out.println("Класс компонента :" + head.getModelType());
 
 			System.out
 					.println("Трак (грузоподъёмность) :" + track.getWeghtUp());
 			System.out.println("Трак (вес) : " + track.getWeght());
-			System.out.println("Класс компонента :" + track.getName());
+			System.out.println("Класс компонента :" + track.getModelType());
 
 		} else {
 			System.out.println("Не все детали на месте!");
@@ -170,28 +138,32 @@ public final class ThankMaschine {
 
 	}
 
-	/**
-	 * Слотирование - это тип элементов которые принимет данная платформа.
-	 * Например, техника с различающимся типом слоторования несовместима.
-	 * 
-	 * @return char
-	 */
-	public char getSloting() {
+	// Sloting
+	char getSloting() {
 		return sloting;
 	}
 
-	protected void setSloting(char sloting) {
+	void setSloting(char sloting) {
 		this.sloting = sloting;
 	}
 
 	// Controll methods
-
-	protected boolean showComplexWeghtUp() {
+	boolean showComplexWeghtUp() {
 		if (track.getWeghtUp()
 				- (engine.getWeght() + head.getWeght() + track.getWeght() + weght) > 0) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	ArrayList<String> getModuleInfo() {
+		ArrayList<String> info = new ArrayList<>();
+		info.add("Класс : " + modelType);
+		info.add("Броня : " + bodyArmour);
+		info.add("Вес : " + weght);
+
+		return info;
 	}
 }
